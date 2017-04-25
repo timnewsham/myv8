@@ -1,0 +1,90 @@
+#!/usr/bin/env expect
+#
+# Install 4.1BSD from tape to rp06bsd
+#
+
+source common.tcl
+
+spawn vax780
+
+simh "set tto 7b"
+simh "set rq dis"
+simh "set lpt dis"
+simh "set rl dis"
+simh "set hk dis"
+simh "set rq dis"
+simh "set rqb dis"
+simh "set rqc dis"
+simh "set rqd dis"
+simh "set ry dis"
+simh "set ts dis"
+simh "set tq dis"
+simh "set dz lines=8"
+simh "set rp0 rp06"
+simh "at rp0 rp06bsd"
+# if rp06bsd doesnt exist:
+optional_simh "Overwrite last track?" ""
+simh "set tu0 te16"
+simh "at tu0 4.1_BSD_19810710-modified.tap"
+
+# boot from tape
+simh "D 50000 20009FDE"
+simh "D 50004 D0512001"
+simh "D 50008 3204A101"
+simh "D 5000C C113C08F"
+simh "D 50010 A1D40424"
+simh "D 50014 008FD00C"
+simh "D 50018 C1800000"
+simh "D 5001C 8F320800"
+simh "D 50020 10A1FE00"
+simh "D 50024 00C139D0"
+simh "D 50028 04c1d004"
+simh "D 5002C 07e15004"
+simh "D 50030 0000f750"
+simh "run 50000"
+simh "run 0"
+
+# extract tape to disk
+respond "=" "mkfs\r"
+respond "file sys size:" "7942\r"
+respond "file system:" "hp(0,0)\r"
+respond "=" "5072\r"
+respond "=" "3 500\r"
+respond "=" "restor\r"
+respond "Tape?" "ht(0,1)\r"
+respond "Disk?" "hp(0,0)\r"
+respond "Last chance before scribbling on disk." "\r"
+
+# boot disk into unix
+respond "=" "boot\r"
+respond ": " "hp(0,0)vmunix\r"
+respond "root device?" "hp0\r"
+
+bsd "fsck /dev/rhp0a"
+bsd "mkfs /dev/hp0g 145673"
+
+bsd "cd /dev"
+bsd "MAKE ht0"
+bsd "cd /"
+
+bsd "/etc/mount /dev/hp0g /usr"
+bsd "cd /usr"
+bsd "mt rew"
+bsd "mt fsf 2"
+bsd "tar xpb 20"
+
+bsd "dd if=/usr/mdec/uboot of=/dev/rhp0a bs=1b count=1"
+
+bsd "cp /etc/fstab.rp06 /etc/fstab"
+bsd "df"
+
+bsd "cd /"
+bsd "chmod 755 / /usr"
+bsd "sync"
+bsd "sync"
+bsd "sync"
+bsd "sync"
+
+send $break
+simh "exit"
+expect eof

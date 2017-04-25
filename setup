@@ -1,0 +1,29 @@
+#!/bin/sh
+#
+# setup a fresh unix v8 system from tape.
+# note: this will erase your previous system!
+#
+
+if [ -e rp06v8 -o -e rp06bsd ] ; then
+    if [ $# -ne 1 -o "x$1" != "xy" ] ; then
+        echo "This will wipe your current v8 system!  Run with 'y' on command"
+        echo "line to confirm!"
+        echo
+        echo "usage:  $0 y"
+        exit 1
+    fi
+    rm -f rp06v8 rp06bsd
+fi
+
+if [ ! -f 4.1_BSD_19810710-modified.tap ] ; then
+    gzip -dc 4.1_BSD_19810710-modified.tap.gz > 4.1_BSD_19810710-modified.tap
+fi
+if [ ! -f v8.tape.gz ] ; then
+    gzip -dc v8.tap.gz > v8.tap
+fi
+
+./install41BSD
+./installV8
+./fixupV8
+
+echo "Done.  Run 'vax780 v8.ini' to boot V8. Log in as root"
