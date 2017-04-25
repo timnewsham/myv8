@@ -8,13 +8,6 @@ proc simh { cmd } {
     sendline $cmd
 }
 
-proc optional_simh { exp cmd } {
-    expect {
-        $exp   { sendline $cmd }
-        "sim>" { sendline "" }
-    }
-}
-
 proc bsd { cmd } {
     expect "# "
     sendline $cmd
