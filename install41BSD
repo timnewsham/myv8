@@ -5,6 +5,8 @@
 
 source common.tcl
 
+exec rm -f rp06bsd
+
 spawn vax780
 
 simh "set tto 7b"
@@ -22,8 +24,7 @@ simh "set tq dis"
 simh "set dz lines=8"
 simh "set rp0 rp06"
 simh "at rp0 rp06bsd"
-# if rp06bsd doesnt exist:
-optional_simh "Overwrite last track?" ""
+respond "Overwrite last track?" ""
 simh "set tu0 te16"
 simh "at tu0 4.1_BSD_19810710-modified.tap"
 
