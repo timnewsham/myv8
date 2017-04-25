@@ -60,6 +60,18 @@ sendline "/dev/rp0g:/usr:rw:1:2"
 send $ctrlD
 unix "mkdir /proc"
 
+unix "cat >/etc/ttys"
+sendline "14console"
+sendline "12tty00"
+sendline "12tty01"
+sendline "12tty02"
+sendline "12tty03"
+sendline "12tty04"
+sendline "12tty05"
+sendline "12tty06"
+sendline "12tty07"
+send $ctrlD
+
 # rebuild /dev
 unix "rm -f /dev/*"
 unix "/etc/mknod /dev/rp0a b 0 0"

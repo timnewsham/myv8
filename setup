@@ -26,4 +26,4 @@ fi
 ./installV8
 ./fixupV8
 
-echo "Done.  Run 'vax780 v8.ini' to boot V8. Log in as root"
+echo "Done.  Run 'vax780 run.conf' to boot V8. Log in as root"
