@@ -1,0 +1,4 @@
+#!/bin/sh
+
+rm -f rp06bsd  rp06v8  rp06v8_prep  rp06work
+rm -f 4.1_BSD_19810710-modified.tap v8.tap

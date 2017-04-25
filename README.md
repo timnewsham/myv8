@@ -1,6 +1,6 @@
 This directory contains the files needed to build a (somewhat) clean UNIX v8
 installation from tape.  It requires that you have "expect" and
-simh's "vax780" installed in your path.  (Ubuntu: `apt-get install simh expect wget`).  
+simh's "vax780" installed in your path.  (Ubuntu: `apt-get install simh expect`).  
 (Note: sorry: Ubuntu's version of simh doesn't quite cut it.  You'll need to
 build vax780 from the latest sources, at http://simh.trailing-edge.com/).
 To build a new system run `./setup`.
@@ -26,6 +26,7 @@ make it usable in the SimH simulator.
 
 Original V8 installation notes can be found at http://doc.cat-v.org/unix/v8/v8directions.pdf.
 
-BSD installation notes can be found at http://gunkies.org/wiki/Installing_4.2_BSD_on_SIMH.
+Original BSD installation notes can be found at http://gunkies.org/wiki/Setting_up_(BSD_4.0)_the_Fourth_Berkeley_Software_Tape
+and SimH-specific notes for 4.2BSD can be found at http://gunkies.org/wiki/Installing_4.2_BSD_on_SIMH.
 
 
