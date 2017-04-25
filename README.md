@@ -8,6 +8,8 @@ To build a new system run `./setup`.
 Once you have built your clean system, run it with `vax780 run.conf`.  You should
 get a login prompt and you can log in as root.
 
+Unix V8 documentation can be found at http://man.cat-v.org/unix_8th/ and http://doc.cat-v.org/unix/v8/.
+
 # Details
 
 V8 is installed by first installing 4.1BSD from tape and then extracting V8 files over 4.1BSD from
@@ -17,6 +19,8 @@ scripts: [install41BSD](install41BSD), which install 4.1BSD from tape, [installV
 extracts V8 files on to the 4.1BSD system and builds a V8 kernel, and [fixupV8](fixupV8), which
 converts the filesystem and does final filesystem setup tasks form within V8.  These scripts
 are intended to be executable and readable, please refer to them for any setup details.
+
+A transcript of the installation process can be found in [transcript.txt](transcript.txt).
 
 The scripts are based heavily on [install notes](http://9legacy.org/9legacy/doc/simh/v8) provided by David du Colombier.
 The BSD tape image and the vax780 boot loaders are taken from the same sources he indicated.
