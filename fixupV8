@@ -46,7 +46,9 @@ unix "/etc/fsck /dev/rrp0a"
 respond "CLEAR?" "y\r"
 respond "FIX?" "y\r"
 respond "SALVAGE?" "y\r"
-unix "/etc/fsck /dev/rrp0a"
+unix "/etc/fsck /dev/rrp0g"
+respond "FIX?" "y\r"
+respond "SALVAGE?" "y\r"
 
 shutdown
 
@@ -54,6 +56,7 @@ shutdown
 spawn vax780
 boot
 unix "/etc/fsck /dev/rrp0a"
+unix "/etc/fsck /dev/rrp0g"
 unix "cat > /etc/fstab"
 sendline "/dev/rp0a:/:rw:1:1"
 sendline "/dev/rp0g:/usr:rw:1:2"
