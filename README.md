@@ -6,7 +6,8 @@ build vax780 from the latest sources, at http://simh.trailing-edge.com/).
 To build a new system run `./setup`.
 
 Once you have built your clean system, run it with `vax780 run.conf`.  You should
-get a login prompt and you can log in as root.
+get a login prompt and you can log in as root.  If you would like to
+use a graphical terminal with V8, see https://github.com/timnewsham/blit.
 
 Unix V8 documentation can be found at http://man.cat-v.org/unix_8th/ and http://doc.cat-v.org/unix/v8/.
 
