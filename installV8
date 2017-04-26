@@ -103,7 +103,8 @@ send $ctrlD
 # install the v8 kernel and exit
 bsd "cp /v8/usr/sys/alice/unix /v8/unix"
 bsd "cd /"
-bsd "umount /v8"
+bsd "umount /dev/hp1g"
+bsd "umount /dev/hp1a"
 bsd "sync"
 bsd "sync"
 bsd "sync"
