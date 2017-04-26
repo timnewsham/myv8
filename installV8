@@ -29,7 +29,6 @@ simh "at rp0 rp06work"
 simh "set rp1 rp06"
 simh "at rp1 rp06v8_prep"
 simh "set tu0 te16"
-simh "at tu0 v8.tap"
 simh "load -o bootBsd 0"
 simh "run 2"
 
@@ -49,11 +48,27 @@ bsd "mkdir usr"
 bsd "mount /dev/hp1g /v8/usr"
 bsd "cd /v8/usr"
 bsd "rm -rf * .??*"
+
+# load v8 tape and extract it to /v8
+bsd ""
+send $break
+simh "at tu0 v8.tap"
+simh "cont"
+after 500 { send "\n" }
 bsd "cd /v8"
 bsd "tar -xp"
-bsd "ls"
+
+# load v8jerq tape and extract to /v8/usr
+bsd ""
+send $break
+simh "at tu0 v8jerq.tap"
+simh "cont"
+after 500 { send "\n" }
+bsd "cd /v8/usr"
+bsd "tar -xp"
 
 bsd "cd /v8"
+bsd "ls"
 bsd "mkdir dev"
 bsd "cd dev"
 bsd "mknod console c 0 0"
@@ -87,6 +102,8 @@ send $ctrlD
 
 # install the v8 kernel and exit
 bsd "cp /v8/usr/sys/alice/unix /v8/unix"
+bsd "cd /"
+bsd "umount /v8"
 bsd "sync"
 bsd "sync"
 bsd "sync"

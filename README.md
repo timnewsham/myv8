@@ -24,8 +24,10 @@ A transcript of the installation process can be found in [transcript.txt](transc
 
 The scripts are based heavily on [install notes](http://9legacy.org/9legacy/doc/simh/v8) provided by David du Colombier.
 The BSD tape image and the vax780 boot loaders are taken from the same sources he indicated.
-The V8 tape is from an image provided by Dan Cross, at http://9legacy.org/9legacy/doc/simh/v8/v8.tar.bz2. It
-has been processed by the `mktape` utility at http://zazie.tom-yam.or.jp/starunix/mktape.c to
+The V8 tapes are from images provided by Dan Cross, 
+at http://www.tuhs.org/Archive/Distributions/Research/Dan_Cross_v8/v8.tar.bz2
+and http://www.tuhs.org/Archive/Distributions/Research/Dan_Cross_v8/v8jerq.tar.bz2.
+It has been processed by the `mktape` utility at http://zazie.tom-yam.or.jp/starunix/mktape.c to
 make it usable in the SimH simulator.
 
 Original V8 installation notes can be found at http://doc.cat-v.org/unix/v8/v8directions.pdf.

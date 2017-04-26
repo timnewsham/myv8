@@ -26,7 +26,6 @@ proc boot { } {
     simh "set dz 7b"
     simh "set rp0 rp06"
     simh "at rp0 rp06v8"
-    simh "at tu0 v8.tape"
     simh "set tu0 te16"
     simh "load -o bootV8 0"
     simh "run 2"
@@ -44,6 +43,7 @@ proc shutdown { } {
 spawn vax780
 boot
 unix "/etc/fsck /dev/rrp0a"
+respond "CLEAR?" "y\r"
 respond "FIX?" "y\r"
 respond "SALVAGE?" "y\r"
 unix "/etc/fsck /dev/rrp0a"

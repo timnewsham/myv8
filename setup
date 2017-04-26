@@ -18,8 +18,11 @@ fi
 if [ ! -f 4.1_BSD_19810710-modified.tap ] ; then
     gzip -dc 4.1_BSD_19810710-modified.tap.gz > 4.1_BSD_19810710-modified.tap
 fi
-if [ ! -f v8.tape.gz ] ; then
+if [ ! -f v8.tap ] ; then
     gzip -dc v8.tap.gz > v8.tap
+fi
+if [ ! -f v8jerq.tap ] ; then
+    gzip -dc v8jerq.tap.gz > v8jerq.tap
 fi
 
 ./install41BSD
