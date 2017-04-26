@@ -135,7 +135,6 @@ sim> at rp0 rp06work
 sim> set rp1 rp06
 sim> at rp1 rp06v8_prep
 sim> set tu0 te16
-sim> at tu0 v8.tap
 sim> load -o bootBsd 0
 sim> run 2
 
@@ -159,18 +158,18 @@ ht0 at mba1 drive 0
 tu0 at ht0 slave 0
 tu1 at ht0 slave 1
 root on hp0
-WARNING: clock lost 71 days -- CHECK AND RESET THE DATE!
+WARNING: clock lost 69 days -- CHECK AND RESET THE DATE!
 WARNING: should run interleaved swap with >= 2Mb
 Automatic reboot in progress...
-Fri Apr 23 17:08:24 GMT 1976
+Sun Apr 25 13:32:58 GMT 1976
 /dev/hp0a: 676 files 4278 blocks 3345 free
 /dev/rhp0g: 1333 files 9198 blocks 132380 free
-Fri Apr 23 17:08:24 GMT 1976
+Sun Apr 25 13:32:59 GMT 1976
 Mounted /usr on /dev/hp0g  
 preserving editor files
 clearing /tmp
 starting daemons: update cron accounting network mail printer.
-Fri Apr 23 17:08:24 GMT 1976
+Sun Apr 25 13:32:59 GMT 1976
 
 
 Berkeley 4.1 VAX/UNIX (Amnesia-Vax)
@@ -213,12 +212,25 @@ File System: /usr
 # mount /dev/hp1g /v8/usr
 # cd /v8/usr
 # rm -rf * .??*
+# 
+Simulation stopped, PC: 800013A4 (FFS #0,#20,800255E0,R0)
+sim> at tu0 v8.tap
+sim> cont
+
 # cd /v8
 # tar -xp
 Tar: blocksize = 1
+# 
+Simulation stopped, PC: 800013AD (BNEQ 800013B5)
+sim> at tu0 v8jerq.tap
+sim> cont
+
+# cd /v8/usr
+# tar -xp
+Tar: blocksize = 1
+# cd /v8
 # ls
 bin        boot       etc        lib        proto-dev  usr
-# cd /v8
 # mkdir dev
 # cd dev
 # mknod console c 0 0
@@ -247,8 +259,8 @@ usr
 $ cd /usr/sys/alice
 $ /etc/config
 $ ed makefile
-/rm27559
- locore
+/rm l27559
+ocore
         @rm locore.i
 s/rm/rm -f/
 wq
@@ -493,6 +505,9 @@ text    data    bss     dec     hex
 139248  52980   370724  562952  89708
 $ 
 $ ^D# cp /v8/usr/sys/alice/unix /v8/unix
+# cd /
+# umount /dev/hp1g
+# umount /dev/hp1a
 # sync
 # sync
 # sync
@@ -527,8 +542,6 @@ Listening on port 8888 (socket 3)
 sim> set dz 7b
 sim> set rp0 rp06
 sim> at rp0 rp06v8
-sim> at tu0 v8.tape
-TU: creating new file
 sim> set tu0 te16
 sim> load -o bootV8 0
 sim> run 2
@@ -536,7 +549,7 @@ sim> run 2
 Boot
 : hp(0,0)unix
 139248+52980+370724 start 0xf48
-Unix 8th Edition Fri Apr 23 17:10:10 GMT 1976
+Unix 8th Edition Sun Apr 25 13:36:05 GMT 1976
 real mem = 8322048 nbuf = 254 nswbuf = 126
 avail mem = 6348800
 mcr0 at tr1
@@ -554,7 +567,7 @@ Sun Jul  4 08:00:00 EDT 1976
 Autoboot:
 Can't stat /dev/ra00
 Automatic reboot failed... help!
-# /etc/fsck /dev/rrp0a
+# /etc/fsck -y /dev/rrp0a
 
 /dev/rrp0a
 File System: /
@@ -565,30 +578,41 @@ File System: /
 ** Phase 3 - Check Connectivity
 ** Phase 4 - Check Reference Counts
 FREE INODE COUNT 2699 SHOULD BE 4924 IN SUPERBLK
-FIX? y
+FIX?  yes
 
 ** Phase 5 - Check Free List 
 5367 BLK(S) MISSING
 BAD FREE LIST
-SALVAGE? y
+SALVAGE?  yes
 
 ** Phase 6 - Salvage Free List
 Default free list spacing assumed
 148 files 2256 blocks 5367 free
 
 ***** FILE SYSTEM WAS MODIFIED *****
-# /etc/fsck /dev/rrp0a
+# /etc/fsck -y /dev/rrp0g
 
-/dev/rrp0a
-File System: /
+/dev/rrp0g
+File System: 
 
-** Checking /dev/rrp0a
+** Checking /dev/rrp0g
 ** Phase 1 - Check Blocks and Sizes
 ** Phase 2 - Check Pathnames
 ** Phase 3 - Check Connectivity
 ** Phase 4 - Check Reference Counts
+FREE INODE COUNT 55684 SHOULD BE 56675 IN SUPERBLK
+FIX?  yes
+
 ** Phase 5 - Check Free List 
-148 files 2256 blocks 5367 free
+BAD FREEBLK COUNT
+BAD FREE LIST
+SALVAGE?  yes
+
+** Phase 6 - Salvage Free List
+Default free list spacing assumed
+8813 files 51849 blocks 89729 free
+
+***** FILE SYSTEM WAS MODIFIED *****
 # sync
 # sync
 # sync
@@ -602,6 +626,7 @@ halting (in tight loop); hit
 Infinite loop, PC: 8000412C (BRB 8000412C)
 sim> exit
 Goodbye
+close sock 3
 spawn vax780
 
 VAX780 simulator V3.9-0
@@ -623,7 +648,6 @@ Listening on port 8888 (socket 3)
 sim> set dz 7b
 sim> set rp0 rp06
 sim> at rp0 rp06v8
-sim> at tu0 v8.tape
 sim> set tu0 te16
 sim> load -o bootV8 0
 sim> run 2
@@ -631,7 +655,7 @@ sim> run 2
 Boot
 : hp(0,0)unix
 139248+52980+370724 start 0xf48
-Unix 8th Edition Fri Apr 23 17:10:10 GMT 1976
+Unix 8th Edition Sun Apr 25 13:36:05 GMT 1976
 real mem = 8322048 nbuf = 254 nswbuf = 126
 avail mem = 6348800
 mcr0 at tr1
@@ -643,12 +667,12 @@ hp0 at mba0 drive 0
 hp1 at mba0 drive 1
 mba1 at tr9
 ht0 at mba1 drive 0
-WARNING: clock lost 71 days -- CHECK AND RESET THE DATE!
-Fri Apr 23 12:09:39 EST 1976
+WARNING: clock lost 69 days -- CHECK AND RESET THE DATE!
+Sun Apr 25 09:35:07 EDT 1976
 Autoboot:
 Can't stat /dev/ra00
 Automatic reboot failed... help!
-# /etc/fsck /dev/rrp0a
+# /etc/fsck -y /dev/rrp0a
 
 /dev/rrp0a
 File System: /
@@ -660,10 +684,34 @@ File System: /
 ** Phase 4 - Check Reference Counts
 ** Phase 5 - Check Free List 
 148 files 2256 blocks 5367 free
+# /etc/fsck -y /dev/rrp0g
+
+/dev/rrp0g
+File System: 
+
+** Checking /dev/rrp0g
+** Phase 1 - Check Blocks and Sizes
+** Phase 2 - Check Pathnames
+** Phase 3 - Check Connectivity
+** Phase 4 - Check Reference Counts
+** Phase 5 - Check Free List 
+8813 files 51849 blocks 89729 free
 # cat > /etc/fstab
 /dev/rp0a:/:rw:1:1
 /dev/rp0g:/usr:rw:1:2
 # mkdir /proc
+# mkdir /usr/adm
+# mkdir /usr/tmp
+# cat >/etc/ttys
+14console
+12tty00
+12tty01
+12tty02
+12tty03
+12tty04
+12tty05
+12tty06
+12tty07
 # rm -f /dev/*
 # /etc/mknod /dev/rp0a b 0 0
 # chmod 600 /dev/rp0a
@@ -927,5 +975,6 @@ halting (in tight loop); hit
 Infinite loop, PC: 8000412C (BRB 8000412C)
 sim> exit
 Goodbye
-Done.  Run 'vax780 v8.ini' to boot V8. Log in as root
+close sock 3
+Done.  Run 'vax780 run.conf' to boot V8. Log in as root
 
