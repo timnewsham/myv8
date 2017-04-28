@@ -2,17 +2,6 @@ spawn vax780
 
 VAX780 simulator V3.9-0
 sim> set tto 7b
-sim> set rq dis
-sim> set lpt dis
-sim> set rl dis
-sim> set hk dis
-sim> set rq dis
-sim> set rqb dis
-sim> set rqc dis
-sim> set rqd dis
-sim> set ry dis
-sim> set ts dis
-sim> set tq dis
 sim> set dz lines=8
 sim> set rp0 rp06
 sim> at rp0 rp06bsd
@@ -60,6 +49,12 @@ avail mem = 7738368
 mcr0 at tr1
 mcr1 at tr2
 uba0 at tr3
+hk0 at uba0 csr 177440 vec 210, ipl 15
+rk0 at hk0 slave 0
+rk1 at hk0 slave 1
+zs0 at uba0 csr 172520 vec 224, ipl 15
+ts0 at zs0 slave 0
+lp0 at uba0 csr 177514 vec 200, ipl 14
 dz0 at uba0 csr 160100 vec 300, ipl 15
 mba0 at tr8
 hp0 at mba0 drive 0
@@ -91,7 +86,6 @@ isize = 65488
 m/n = 3 500
 # cd /dev
 # MAKE ht0
-# cd /
 # /etc/mount /dev/hp0g /usr
 # cd /usr
 # mt rew
@@ -107,28 +101,22 @@ Filesystem  Mounted on  kbytes    used    free  % used
 /dev/hp0g   /usr        141578    9198  132380      6%
 # cd /
 # chmod 755 / /usr
-# sync
-# sync
-# sync
-# 
-Simulation stopped, PC: 800013AF (MTPR #0,#12)
+# /etc/umount /dev/hp0g
+# sync; sync; sync
+# /etc/halt
+syncing disks... done
+halting (in tight loop); hit
+	^P
+	HALT
+
+
+Infinite loop, PC: 80003AD5 (BRB 80003AD5)
 sim> exit
 Goodbye
 spawn vax780
 
 VAX780 simulator V3.9-0
 sim> set tto 7b
-sim> set rq dis
-sim> set lpt dis
-sim> set rl dis
-sim> set hk dis
-sim> set rq dis
-sim> set rqb dis
-sim> set rqc dis
-sim> set rqd dis
-sim> set ry dis
-sim> set ts dis
-sim> set tq dis
 sim> set dz lines=8
 sim> set rp0 rp06
 sim> at rp0 rp06work
@@ -147,6 +135,12 @@ avail mem = 7738368
 mcr0 at tr1
 mcr1 at tr2
 uba0 at tr3
+hk0 at uba0 csr 177440 vec 210, ipl 15
+rk0 at hk0 slave 0
+rk1 at hk0 slave 1
+zs0 at uba0 csr 172520 vec 224, ipl 15
+ts0 at zs0 slave 0
+lp0 at uba0 csr 177514 vec 200, ipl 14
 dz0 at uba0 csr 160100 vec 300, ipl 15
 mba0 at tr8
 hp0 at mba0 drive 0
@@ -158,18 +152,18 @@ ht0 at mba1 drive 0
 tu0 at ht0 slave 0
 tu1 at ht0 slave 1
 root on hp0
-WARNING: clock lost 69 days -- CHECK AND RESET THE DATE!
+WARNING: clock lost 67 days -- CHECK AND RESET THE DATE!
 WARNING: should run interleaved swap with >= 2Mb
 Automatic reboot in progress...
-Sun Apr 25 13:32:58 GMT 1976
+Tue Apr 27 12:38:40 GMT 1976
 /dev/hp0a: 676 files 4278 blocks 3345 free
 /dev/rhp0g: 1333 files 9198 blocks 132380 free
-Sun Apr 25 13:32:59 GMT 1976
+Tue Apr 27 12:38:41 GMT 1976
 Mounted /usr on /dev/hp0g  
 preserving editor files
 clearing /tmp
 starting daemons: update cron accounting network mail printer.
-Sun Apr 25 13:32:59 GMT 1976
+Tue Apr 27 12:38:41 GMT 1976
 
 
 Berkeley 4.1 VAX/UNIX (Amnesia-Vax)
@@ -213,20 +207,20 @@ File System: /usr
 # cd /v8/usr
 # rm -rf * .??*
 # 
-Simulation stopped, PC: 800013A4 (FFS #0,#20,800255E0,R0)
+Simulation stopped, PC: 800013B2 (BRW 800013A4)
 sim> at tu0 v8.tap
 sim> cont
 
 # cd /v8
-# tar -xp
+# tar xpb 20
 Tar: blocksize = 1
 # 
-Simulation stopped, PC: 800013AD (BNEQ 800013B5)
+Simulation stopped, PC: 800013AF (MTPR #0,#12)
 sim> at tu0 v8jerq.tap
 sim> cont
 
 # cd /v8/usr
-# tar -xp
+# tar xpb 20
 Tar: blocksize = 1
 # cd /v8
 # ls
@@ -259,8 +253,8 @@ usr
 $ cd /usr/sys/alice
 $ /etc/config
 $ ed makefile
-/rm l27559
-ocore
+/rm 27559
+locore
         @rm locore.i
 s/rm/rm -f/
 wq
@@ -360,6 +354,8 @@ rm -f trap.s
 as -o udiv.o ../sys/udiv.s
 as -o urem.o ../sys/urem.s
 cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/vaxtrap.c
+        Tue Apr 27 12:41:00 GMT 1976
+
 /lib/c2 vaxtrap.s | sed -f ../sys/asm.sed | as -o vaxtrap.o
 rm -f vaxtrap.s
 cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/vmdrum.c
@@ -505,12 +501,12 @@ text    data    bss     dec     hex
 139248  52980   370724  562952  89708
 $ 
 $ ^D# cp /v8/usr/sys/alice/unix /v8/unix
+# cd /v8/usr/sys/alice
+# rm eddep *.o locore.i
 # cd /
 # umount /dev/hp1g
 # umount /dev/hp1a
-# sync
-# sync
-# sync
+# sync; sync; sync
 # halt
 syncing disks... done
 halting (in tight loop); hit
@@ -525,21 +521,7 @@ spawn vax780
 
 VAX780 simulator V3.9-0
 sim> set tto 7b
-sim> set rq dis
-sim> set lpt dis
-sim> set rl dis
-sim> set hk dis
-sim> set rq dis
-sim> set rqb dis
-sim> set rqc dis
-sim> set rqd dis
-sim> set ry dis
-sim> set ts dis
-sim> set tq dis
 sim> set dz lines=8
-sim> att dz 8888
-Listening on port 8888 (socket 3)
-sim> set dz 7b
 sim> set rp0 rp06
 sim> at rp0 rp06v8
 sim> set tu0 te16
@@ -549,12 +531,16 @@ sim> run 2
 Boot
 : hp(0,0)unix
 139248+52980+370724 start 0xf48
-Unix 8th Edition Sun Apr 25 13:36:05 GMT 1976
+Unix 8th Edition Tue Apr 27 12:41:48 GMT 1976
 real mem = 8322048 nbuf = 254 nswbuf = 126
 avail mem = 6348800
 mcr0 at tr1
 mcr1 at tr2
 uba0 at tr3
+uda1 uba0 csr 172150 vec 0774 ipl x15
+ra1 at uda1 sl1 
+ra3 at uda1 sl3 
+ra5 at uda1 sl5 
 dz0 at uba0 csr 160100 vec 0300 ipl x15
 mba0 at tr8
 hp0 at mba0 drive 0
@@ -600,7 +586,7 @@ File System:
 ** Phase 2 - Check Pathnames
 ** Phase 3 - Check Connectivity
 ** Phase 4 - Check Reference Counts
-FREE INODE COUNT 55684 SHOULD BE 56675 IN SUPERBLK
+FREE INODE COUNT 54277 SHOULD BE 56758 IN SUPERBLK
 FIX?  yes
 
 ** Phase 5 - Check Free List 
@@ -610,12 +596,10 @@ SALVAGE?  yes
 
 ** Phase 6 - Salvage Free List
 Default free list spacing assumed
-8813 files 51849 blocks 89729 free
+8730 files 50983 blocks 90595 free
 
 ***** FILE SYSTEM WAS MODIFIED *****
-# sync
-# sync
-# sync
+# sync; sync; sync
 # /etc/halt
 syncing disks... done
 halting (in tight loop); hit
@@ -626,26 +610,11 @@ halting (in tight loop); hit
 Infinite loop, PC: 8000412C (BRB 8000412C)
 sim> exit
 Goodbye
-close sock 3
 spawn vax780
 
 VAX780 simulator V3.9-0
 sim> set tto 7b
-sim> set rq dis
-sim> set lpt dis
-sim> set rl dis
-sim> set hk dis
-sim> set rq dis
-sim> set rqb dis
-sim> set rqc dis
-sim> set rqd dis
-sim> set ry dis
-sim> set ts dis
-sim> set tq dis
 sim> set dz lines=8
-sim> att dz 8888
-Listening on port 8888 (socket 3)
-sim> set dz 7b
 sim> set rp0 rp06
 sim> at rp0 rp06v8
 sim> set tu0 te16
@@ -655,20 +624,24 @@ sim> run 2
 Boot
 : hp(0,0)unix
 139248+52980+370724 start 0xf48
-Unix 8th Edition Sun Apr 25 13:36:05 GMT 1976
+Unix 8th Edition Tue Apr 27 12:41:48 GMT 1976
 real mem = 8322048 nbuf = 254 nswbuf = 126
 avail mem = 6348800
 mcr0 at tr1
 mcr1 at tr2
 uba0 at tr3
+uda1 uba0 csr 172150 vec 0774 ipl x15
+ra1 at uda1 sl1 
+ra3 at uda1 sl3 
+ra5 at uda1 sl5 
 dz0 at uba0 csr 160100 vec 0300 ipl x15
 mba0 at tr8
 hp0 at mba0 drive 0
 hp1 at mba0 drive 1
 mba1 at tr9
 ht0 at mba1 drive 0
-WARNING: clock lost 69 days -- CHECK AND RESET THE DATE!
-Sun Apr 25 09:35:07 EDT 1976
+WARNING: clock lost 67 days -- CHECK AND RESET THE DATE!
+Tue Apr 27 08:40:49 EDT 1976
 Autoboot:
 Can't stat /dev/ra00
 Automatic reboot failed... help!
@@ -695,23 +668,15 @@ File System:
 ** Phase 3 - Check Connectivity
 ** Phase 4 - Check Reference Counts
 ** Phase 5 - Check Free List 
-8813 files 51849 blocks 89729 free
+8730 files 50983 blocks 90595 free
 # cat > /etc/fstab
 /dev/rp0a:/:rw:1:1
 /dev/rp0g:/usr:rw:1:2
+# /etc/mount -a
+Mounted /dev/rp0g on /usr
 # mkdir /proc
 # mkdir /usr/adm
 # mkdir /usr/tmp
-# cat >/etc/ttys
-14console
-12tty00
-12tty01
-12tty02
-12tty03
-12tty04
-12tty05
-12tty06
-12tty07
 # rm -f /dev/*
 # /etc/mknod /dev/rp0a b 0 0
 # chmod 600 /dev/rp0a
@@ -962,9 +927,379 @@ unknown user id: pjw
 # for n in 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 ; do /etc/mknod /dev/fd/$n c 40 $n; chmod 666 /dev/fd/$n; /etc/chown root,other /dev/fd/$n; done
 # for n in 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 ; do /etc/mknod /dev/fd/$n c 40 $n; chmod 666 /dev/fd/$n; /etc/chown root,other /dev/fd/$n; done
 # for n in 00 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 ; do /etc/mknod /dev/pt/pt$n c 18 $n; chmod 666 /dev/pt/pt$n; /etc/chown root,sys /dev/pt/pt$n; done
-# sync
-# sync
-# sync
+# cat >/etc/ttys
+14console
+12tty00
+12tty01
+12tty02
+12tty03
+12tty04
+12tty05
+12tty06
+12tty07
+# cd /usr/sys/alice
+# cat >> conf
+pseudo-device   inet    6
+pseudo-device   uarp    1
+pseudo-device   tcp     32
+pseudo-device   udp     32
+# /etc/config
+# make
+cc -DALICE -DVAX780 -DDISKMON ../conf/genassym.c; ./a.out >assym.s; rm -f a.out
+cat assym.s ../sys/scb.s ../sys/locore.s ubglue.s > locore.c
+cc -E -DLOCORE -DALICE -DVAX780 -DDISKMON -DKERNEL locore.c > locore.i
+as -o locore.o ${AHEADS} locore.i
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/acct.c
+/lib/c2 acct.s | sed -f ../sys/asm.sed | as -o acct.o
+rm -f acct.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/alloc.c
+/lib/c2 alloc.s | sed -f ../sys/asm.sed | as -o alloc.o
+rm -f alloc.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/calloc.c
+/lib/c2 calloc.s | sed -f ../sys/asm.sed | as -o calloc.o
+rm -f calloc.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/clock.c
+/lib/c2 clock.s | sed -f ../sys/asm.sed | as -o clock.o
+rm -f clock.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/fio.c
+/lib/c2 fio.s | sed -f ../sys/asm.sed | as -o fio.o
+rm -f fio.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/iget.c
+/lib/c2 iget.s | sed -f ../sys/asm.sed | as -o iget.o
+rm -f iget.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/ioctl.c
+/lib/c2 ioctl.s | sed -f ../sys/asm.sed | as -o ioctl.o
+rm -f ioctl.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/machdep.c
+/lib/c2 machdep.s | sed -f ../sys/asm.sed | as -o machdep.o
+rm -f machdep.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/main.c
+/lib/c2 main.s | sed -f ../sys/asm.sed | as -o main.o
+rm -f main.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/mp.c
+/lib/c2 mp.s | sed -f ../sys/asm.sed | as -o mp.o
+rm -f mp.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/nami.c
+/lib/c2 nami.s | sed -f ../sys/asm.sed | as -o nami.o
+rm -f nami.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/neta.c
+/lib/c2 neta.s | sed -f ../sys/asm.sed | as -o neta.o
+rm -f neta.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/partab.c
+/lib/c2 partab.s | sed -f ../sys/asm.sed | as -o partab.o
+rm -f partab.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/pipe.c
+/lib/c2 pipe.s | sed -f ../sys/asm.sed | as -o pipe.o
+rm -f pipe.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/prf.c
+/lib/c2 prf.s | sed -f ../sys/asm.sed | as -o prf.o
+rm -f prf.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/proca.c
+/lib/c2 proca.s | sed -f ../sys/asm.sed | as -o proca.o
+rm -f proca.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/rdwri.c
+/lib/c2 rdwri.s | sed -f ../sys/asm.sed | as -o rdwri.o
+rm -f rdwri.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/rmap.c
+/lib/c2 rmap.s | sed -f ../sys/asm.sed | as -o rmap.o
+rm -f rmap.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/sig.c
+/lib/c2 sig.s | sed -f ../sys/asm.sed | as -o sig.o
+rm -f sig.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/slp.c
+/lib/c2 slp.s | sed -f ../sys/asm.sed | as -o slp.o
+rm -f slp.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/streamio.c
+/lib/c2 streamio.s | sed -f ../sys/asm.sed | as -o streamio.o
+rm -f streamio.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/subr.c
+/lib/c2 subr.s | sed -f ../sys/asm.sed | as -o subr.o
+rm -f subr.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/sys1.c
+/lib/c2 sys1.s | sed -f ../sys/asm.sed | as -o sys1.o
+rm -f sys1.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/sys2.c
+/lib/c2 sys2.s | sed -f ../sys/asm.sed | as -o sys2.o
+rm -f sys2.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/sys3.c
+/lib/c2 sys3.s | sed -f ../sys/asm.sed | as -o sys3.o
+rm -f sys3.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/sys4.c
+/lib/c2 sys4.s | sed -f ../sys/asm.sed | as -o sys4.o
+rm -f sys4.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/sysent.c
+/lib/c2 sysent.s | sed -f ../sys/asm.sed | as -o sysent.o
+rm -f sysent.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/text.c
+/lib/c2 text.s | sed -f ../sys/asm.sed | as -o text.o
+rm -f text.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/trap.c
+/lib/c2 trap.s | sed -f ../sys/asm.sed | as -o trap.o
+rm -f trap.s
+as -o udiv.o ../sys/udiv.s
+as -o urem.o ../sys/urem.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/vaxtrap.c
+/lib/c2 vaxtrap.s | sed -f ../sys/asm.sed | as -o vaxtrap.o
+rm -f vaxtrap.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/vmdrum.c
+/lib/c2 vmdrum.s | sed -f ../sys/asm.sed | as -o vmdrum.o
+rm -f vmdrum.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/vmmem.c
+/lib/c2 vmmem.s | sed -f ../sys/asm.sed | as -o vmmem.o
+rm -f vmmem.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/vmmon.c
+/lib/c2 vmmon.s | sed -f ../sys/asm.sed | as -o vmmon.o
+rm -f vmmon.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/vmpage.c
+/lib/c2 vmpage.s | sed -f ../sys/asm.sed | as -o vmpage.o
+rm -f vmpage.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/vmproc.c
+/lib/c2 vmproc.s | sed -f ../sys/asm.sed | as -o vmproc.o
+rm -f vmproc.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/vmpt.c
+/lib/c2 vmpt.s | sed -f ../sys/asm.sed | as -o vmpt.o
+rm -f vmpt.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/vmsched.c
+/lib/c2 vmsched.s | sed -f ../sys/asm.sed | as -o vmsched.o
+rm -f vmsched.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/vmsubr.c
+/lib/c2 vmsubr.s | sed -f ../sys/asm.sed | as -o vmsubr.o
+rm -f vmsubr.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/vmswap.c
+/lib/c2 vmswap.s | sed -f ../sys/asm.sed | as -o vmswap.o
+rm -f vmswap.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/vmsys.c
+/lib/c2 vmsys.s | sed -f ../sys/asm.sed | as -o vmsys.o
+rm -f vmsys.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/bio.c
+/lib/c2 bio.s | sed -f ../sys/asm.sed | as -o bio.o
+rm -f bio.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/streamconf.c
+/lib/c2 streamconf.s | sed -f ../sys/asm.sed | as -o streamconf.o
+rm -f streamconf.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/cons.c
+/lib/c2 cons.s | sed -f ../sys/asm.sed | as -o cons.o
+rm -f cons.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/dkbad.c
+/lib/c2 dkbad.s | sed -f ../sys/asm.sed | as -o dkbad.o
+rm -f dkbad.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/dkleave.c
+/lib/c2 dkleave.s | sed -f ../sys/asm.sed | as -o dkleave.o
+rm -f dkleave.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/dsort.c
+/lib/c2 dsort.s | sed -f ../sys/asm.sed | as -o dsort.o
+rm -f dsort.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/flp.c
+/lib/c2 flp.s | sed -f ../sys/asm.sed | as -o flp.o
+rm -f flp.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/mem.c
+/lib/c2 mem.s | sed -f ../sys/asm.sed | as -o mem.o
+rm -f mem.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/stream.c
+/lib/c2 stream.s | sed -f ../sys/asm.sed | as -o stream.o
+rm -f stream.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/sw.c
+/lib/c2 sw.s | sed -f ../sys/asm.sed | as -o sw.o
+rm -f sw.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/vaxcpu.c
+/lib/c2 vaxcpu.s | sed -f ../sys/asm.sed | as -o vaxcpu.o
+rm -f vaxcpu.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/autoconf.c
+/lib/c2 -i autoconf.s | sed -f ../sys/asm.sed | as -o autoconf.o
+rm -f autoconf.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/uba.c
+/lib/c2 -i uba.s | sed -f ../sys/asm.sed | as -o uba.o
+rm -f uba.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/dk.c
+/lib/c2 -i dk.s | sed -f ../sys/asm.sed | as -o dk.o
+rm -f dk.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/dn.c
+/lib/c2 -i dn.s | sed -f ../sys/asm.sed | as -o dn.o
+rm -f dn.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/dr.c
+/lib/c2 -i dr.s | sed -f ../sys/asm.sed | as -o dr.o
+rm -f dr.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/dz.c
+/lib/c2 -i dz.s | sed -f ../sys/asm.sed | as -o dz.o
+rm -f dz.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/hp.c
+/lib/c2 -i hp.s | sed -f ../sys/asm.sed | as -o hp.o
+rm -f hp.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/ht.c
+/lib/c2 -i ht.s | sed -f ../sys/asm.sed | as -o ht.o
+rm -f ht.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/kdi.c
+/lib/c2 -i kdi.s | sed -f ../sys/asm.sed | as -o kdi.o
+rm -f kdi.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/kmc.c
+/lib/c2 -i kmc.s | sed -f ../sys/asm.sed | as -o kmc.o
+rm -f kmc.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/mba.c
+/lib/c2 -i mba.s | sed -f ../sys/asm.sed | as -o mba.o
+rm -f mba.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/mt.c
+/lib/c2 -i mt.s | sed -f ../sys/asm.sed | as -o mt.o
+rm -f mt.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/tri.c
+/lib/c2 -i tri.s | sed -f ../sys/asm.sed | as -o tri.o
+rm -f tri.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/uda.c
+/lib/c2 -i uda.s | sed -f ../sys/asm.sed | as -o uda.o
+rm -f uda.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/bufld.c
+/lib/c2 -i bufld.s | sed -f ../sys/asm.sed | as -o bufld.o
+rm -f bufld.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/cmcld.c
+/lib/c2 -i cmcld.s | sed -f ../sys/asm.sed | as -o cmcld.o
+rm -f cmcld.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/dkp.c
+/lib/c2 -i dkp.s | sed -f ../sys/asm.sed | as -o dkp.o
+rm -f dkp.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/mesg.c
+/lib/c2 -i mesg.s | sed -f ../sys/asm.sed | as -o mesg.o
+rm -f mesg.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/nttyld.c
+/lib/c2 -i nttyld.s | sed -f ../sys/asm.sed | as -o nttyld.o
+rm -f nttyld.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/spipe.c
+/lib/c2 -i spipe.s | sed -f ../sys/asm.sed | as -o spipe.o
+rm -f spipe.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/ttyld.c
+/lib/c2 -i ttyld.s | sed -f ../sys/asm.sed | as -o ttyld.o
+rm -f ttyld.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../inet/ip_arp.c
+/lib/c2 -i ip_arp.s | sed -f ../sys/asm.sed | as -o ip_arp.o
+rm -f ip_arp.s
+as -o goo.o ../inet/goo.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../inet/ip_device.c
+/lib/c2 -i ip_device.s | sed -f ../sys/asm.sed | as -o ip_device.o
+rm -f ip_device.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../inet/ip_input.c
+/lib/c2 -i ip_input.s | sed -f ../sys/asm.sed | as -o ip_input.o
+rm -f ip_input.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../inet/ip_ld.c
+/lib/c2 -i ip_ld.s | sed -f ../sys/asm.sed | as -o ip_ld.o
+rm -f ip_ld.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../inet/ip_output.c
+/lib/c2 -i ip_output.s | sed -f ../sys/asm.sed | as -o ip_output.o
+rm -f ip_output.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../inet/ip_subr.c
+/lib/c2 -i ip_subr.s | sed -f ../sys/asm.sed | as -o ip_subr.o
+rm -f ip_subr.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../inet/socket.c
+/lib/c2 -i socket.s | sed -f ../sys/asm.sed | as -o socket.o
+rm -f socket.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../inet/tcp_device.c
+/lib/c2 -i tcp_device.s | sed -f ../sys/asm.sed | as -o tcp_device.o
+rm -f tcp_device.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../inet/tcp_input.c
+/lib/c2 -i tcp_input.s | sed -f ../sys/asm.sed | as -o tcp_input.o
+rm -f tcp_input.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../inet/tcp_ld.c
+/lib/c2 -i tcp_ld.s | sed -f ../sys/asm.sed | as -o tcp_ld.o
+rm -f tcp_ld.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../inet/tcp_output.c
+/lib/c2 -i tcp_output.s | sed -f ../sys/asm.sed | as -o tcp_output.o
+rm -f tcp_output.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../inet/tcp_subr.c
+/lib/c2 -i tcp_subr.s | sed -f ../sys/asm.sed | as -o tcp_subr.o
+rm -f tcp_subr.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../inet/tcp_timer.c
+/lib/c2 -i tcp_timer.s | sed -f ../sys/asm.sed | as -o tcp_timer.o
+rm -f tcp_timer.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../inet/udp_device.c
+/lib/c2 -i udp_device.s | sed -f ../sys/asm.sed | as -o udp_device.o
+rm -f udp_device.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../inet/udp_input.c
+/lib/c2 -i udp_input.s | sed -f ../sys/asm.sed | as -o udp_input.o
+rm -f udp_input.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../inet/udp_ld.c
+/lib/c2 -i udp_ld.s | sed -f ../sys/asm.sed | as -o udp_ld.o
+rm -f udp_ld.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../inet/udp_output.c
+/lib/c2 -i udp_output.s | sed -f ../sys/asm.sed | as -o udp_output.o
+rm -f udp_output.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/connld.c
+/lib/c2 -i connld.s | sed -f ../sys/asm.sed | as -o connld.o
+rm -f connld.s
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ioconf.c
+/lib/c2 ioconf.s | sed -f ../sys/asm.sed | as -o ioconf.o
+rm -f ioconf.s
+cc -O -DALICE -DVAX780 -DDISKMON -DKERNEL -c conf.c
+cp ../sys/param.c .
+cc -c -O -DALICE -DVAX780 -DDISKMON -DHZ=60 -DTIMEZONE=300 -DDST=1 -DMAXUSERS=60 param.c
+cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/swapalice.c
+/lib/c2 swapalice.s | sed -f ../sys/asm.sed | as -o swapalice.o
+rm -f swapalice.s
+loading unix
+text	data	bss	dec	hex
+159316	54592	381508	595416	915d8
+# cp unix /
+# make clean
+rm -f eddep *unix* tags *.o locore.i [a-tv-z]*.s errs linterrs
+# PATH=/bin:/usr/bin:/etc; export PATH
+# cd /usr/src/cmd/inet/libin; make install
+cc -g -I ../h -c tcp_lib.c
+cc -g -I ../h -c udp_lib.c
+cc -g -I ../h -c in_service.c
+cc -g -I ../h -c in_address.c
+cc -g -I ../h -c in_host.c
+cc -g -I ../h -c in_subrs.c
+cc -g -I ../h -c in_ntoa.c
+cc -c in_ntoh.s
+ar ru libin.a tcp_lib.o udp_lib.o in_service.o in_address.o in_host.o in_subrs.o in_ntoa.o in_ntoh.o
+ar: creating libin.a
+cp libin.a /usr/lib
+( cd /usr/lib ; ranlib libin.a )
+# cd ../bin && make install && make clean
+cc -g -I ../h -c rsh.c
+cc -g -I ../h -o rsh rsh.o -lin
+cc -g -I ../h -c rogin.c
+cc -g -I ../h -o rogin rogin.o -lin
+cc -g -I ../h -c rcp.c
+cc -g -I ../h -o rcp rcp.o -lin
+cc -g -I ../h -c netstat.c
+cc -g -I ../h -o netstat netstat.o -lin
+cc -g -I ../h -c telnet.c
+cc -g -I ../h -o telnet telnet.o -lin
+( cd /usr/inet/bin ; rm -f rsh rogin rcp netstat telnet ropy rlogin )
+cp rsh rogin rcp netstat telnet /usr/inet/bin
+( cd /usr/inet/bin ; strip rsh rogin rcp netstat telnet )
+( cd /usr/inet/bin ; /etc/chown root rsh rogin rcp telnet )
+( cd /usr/inet/bin ; chmod go-w,u+s  rsh rogin rcp telnet )
+( cd /usr/inet/bin ; chgrp sys  netstat )
+( cd /usr/inet/bin ; chmod go-w,g+s  netstat; ln rogin rlogin; ln rcp ropy)
+rm -f rsh rogin rcp netstat telnet *.o
+# cd ../etc && make install && make clean
+cc -g -I ../h -c ipconfig.c
+cc -g -I ../h -o ipconfig ipconfig.o -lin
+cc -g -I ../h -c tcpconfig.c
+cc -g -I ../h -o tcpconfig tcpconfig.o
+cc -g -I ../h -c rogind.c
+cc -g -I ../h -o rogind rogind.o -lin
+cc -g -I ../h -c rshd.c
+cc -g -I ../h -o rshd rshd.o -lin
+cc -g -I ../h -c route.c
+cc -g -I ../h -o route route.o -lin
+cc -g -I ../h -c routed.c
+cc -g -I ../h -o routed routed.o -lin
+cc -g -I ../h -c dkipconfig.c
+cc -g -I ../h -o dkipconfig dkipconfig.o -ldk -lin -ljobs
+cc -g -I ../h -c telnetd.c
+cc -g -I ../h -c pt.c
+cc -g -I ../h -c whoami.c
+cc -g -I ../h -o telnetd telnetd.o pt.o whoami.o -lin
+cc -g -I ../h interlan.c  -o interlan
+cc -g -I ../h udpconfig.c  -o udpconfig
+( cd /usr/inet/etc ; rm -f ipconfig tcpconfig rogind rshd route routed dkipconfig telnetd interlan udpconfig )
+cp ipconfig tcpconfig rogind rshd route routed dkipconfig telnetd interlan udpconfig /usr/inet/etc
+( cd /usr/inet/etc ; strip ipconfig tcpconfig rogind rshd route routed dkipconfig telnetd interlan udpconfig )
+( cd /usr/inet/etc ; /etc/chown daemon dkipconfig )
+( cd /usr/inet/etc ; chmod go-w,u+s dkipconfig )
+rm -f ipconfig tcpconfig rogind rshd route routed dkipconfig telnetd interlan udpconfig *.o
+# cd /
+# umount /dev/rp0g
+# sync; sync; sync
 # /etc/halt
 syncing disks... done
 halting (in tight loop); hit
@@ -975,6 +1310,5 @@ halting (in tight loop); hit
 Infinite loop, PC: 8000412C (BRB 8000412C)
 sim> exit
 Goodbye
-close sock 3
 Done.  Run 'vax780 run.conf' to boot V8. Log in as root
 
