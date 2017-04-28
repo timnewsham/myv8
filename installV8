@@ -12,17 +12,6 @@ spawn vax780
 
 # boot disk with bootBsd file image
 simh "set tto 7b"
-simh "set rq dis"
-simh "set lpt dis"
-simh "set rl dis"
-simh "set hk dis"
-simh "set rq dis"
-simh "set rqb dis"
-simh "set rqc dis"
-simh "set rqd dis"
-simh "set ry dis"
-simh "set ts dis"
-simh "set tq dis"
 simh "set dz lines=8"
 simh "set rp0 rp06"
 simh "at rp0 rp06work"
@@ -56,7 +45,7 @@ simh "at tu0 v8.tap"
 simh "cont"
 after 500 { send "\n" }
 bsd "cd /v8"
-bsd "tar -xp"
+bsd "tar xpb 20"
 
 # load v8jerq tape and extract to /v8/usr
 bsd ""
@@ -65,7 +54,7 @@ simh "at tu0 v8jerq.tap"
 simh "cont"
 after 500 { send "\n" }
 bsd "cd /v8/usr"
-bsd "tar -xp"
+bsd "tar xpb 20"
 
 bsd "cd /v8"
 bsd "ls"
@@ -102,12 +91,12 @@ send $ctrlD
 
 # install the v8 kernel and exit
 bsd "cp /v8/usr/sys/alice/unix /v8/unix"
+bsd "cd /v8/usr/sys/alice"
+bsd "rm eddep *.o locore.i"
 bsd "cd /"
 bsd "umount /dev/hp1g"
 bsd "umount /dev/hp1a"
-bsd "sync"
-bsd "sync"
-bsd "sync"
+bsd "sync; sync; sync"
 bsd "halt"
 
 simh "exit"

@@ -10,20 +10,7 @@ exec cp rp06v8_prep rp06v8
 
 proc boot { } {
     simh "set tto 7b"
-    simh "set rq dis"
-    simh "set lpt dis"
-    simh "set rl dis"
-    simh "set hk dis"
-    simh "set rq dis"
-    simh "set rqb dis"
-    simh "set rqc dis"
-    simh "set rqd dis"
-    simh "set ry dis"
-    simh "set ts dis"
-    simh "set tq dis"
     simh "set dz lines=8"
-    simh "att dz 8888"
-    simh "set dz 7b"
     simh "set rp0 rp06"
     simh "at rp0 rp06v8"
     simh "set tu0 te16"
@@ -31,9 +18,7 @@ proc boot { } {
     simh "run 2"
 }
 proc shutdown { } {
-    unix "sync"
-    unix "sync"
-    unix "sync"
+    unix "sync; sync; sync"
     unix "/etc/halt"
     simh "exit"
     expect eof
@@ -55,21 +40,10 @@ unix "cat > /etc/fstab"
 sendline "/dev/rp0a:/:rw:1:1"
 sendline "/dev/rp0g:/usr:rw:1:2"
 send $ctrlD
+unix "/etc/mount -a"
 unix "mkdir /proc"
 unix "mkdir /usr/adm"
 unix "mkdir /usr/tmp"
-
-unix "cat >/etc/ttys"
-sendline "14console"
-sendline "12tty00"
-sendline "12tty01"
-sendline "12tty02"
-sendline "12tty03"
-sendline "12tty04"
-sendline "12tty05"
-sendline "12tty06"
-sendline "12tty07"
-send $ctrlD
 
 # rebuild /dev
 unix "rm -f /dev/*"
@@ -329,5 +303,39 @@ unix "for n in 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86
 
 unix "for n in 00 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 ; do /etc/mknod /dev/pt/pt\$n c 18 \$n; chmod 666 /dev/pt/pt\$n; /etc/chown root,sys /dev/pt/pt\$n; done"
 
+# setup ttys
+unix "cat >/etc/ttys"
+sendline "14console"
+sendline "12tty00"
+sendline "12tty01"
+sendline "12tty02"
+sendline "12tty03"
+sendline "12tty04"
+sendline "12tty05"
+sendline "12tty06"
+sendline "12tty07"
+send $ctrlD
+
+# enable networking in kernel
+unix "cd /usr/sys/alice"
+unix "cat >> conf"
+sendline "pseudo-device   inet    6"
+sendline "pseudo-device   uarp    1"
+sendline "pseudo-device   tcp     32"
+sendline "pseudo-device   udp     32"
+send $ctrlD
+unix "/etc/config"
+unix "make"
+unix "cp unix /"
+unix "make clean"
+
+# install network commands
+unix "PATH=/bin:/usr/bin:/etc; export PATH"
+unix "cd /usr/src/cmd/inet/libin; make install"
+unix "cd ../bin && make install && make clean"
+unix "cd ../etc && make install && make clean"
+
+unix "cd /"
+unix "umount /dev/rp0g"
 shutdown
 

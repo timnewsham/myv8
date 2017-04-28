@@ -10,17 +10,6 @@ exec rm -f rp06bsd
 spawn vax780
 
 simh "set tto 7b"
-simh "set rq dis"
-simh "set lpt dis"
-simh "set rl dis"
-simh "set hk dis"
-simh "set rq dis"
-simh "set rqb dis"
-simh "set rqc dis"
-simh "set rqd dis"
-simh "set ry dis"
-simh "set ts dis"
-simh "set tq dis"
 simh "set dz lines=8"
 simh "set rp0 rp06"
 simh "at rp0 rp06bsd"
@@ -66,7 +55,6 @@ bsd "mkfs /dev/hp0g 145673"
 
 bsd "cd /dev"
 bsd "MAKE ht0"
-bsd "cd /"
 
 bsd "/etc/mount /dev/hp0g /usr"
 bsd "cd /usr"
@@ -81,11 +69,8 @@ bsd "df"
 
 bsd "cd /"
 bsd "chmod 755 / /usr"
-bsd "sync"
-bsd "sync"
-bsd "sync"
-bsd "sync"
-
-send $break
+bsd "/etc/umount /dev/hp0g"
+bsd "sync; sync; sync"
+bsd "/etc/halt"
 simh "exit"
 expect eof
