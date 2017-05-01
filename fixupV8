@@ -319,19 +319,6 @@ sendline "."
 sendline "w"
 sendline "q"
 
-# enable networking in kernel
-unix "cd /usr/sys/alice"
-unix "cat >> conf"
-sendline "pseudo-device   inet    6"
-sendline "pseudo-device   uarp    1"
-sendline "pseudo-device   tcp     32"
-sendline "pseudo-device   udp     32"
-send $ctrlD
-unix "/etc/config"
-unix "make"
-unix "cp unix /"
-unix "make clean"
-
 # install network commands
 unix "PATH=/bin:/usr/bin:/etc; export PATH"
 unix "cd /usr/src/cmd/inet/libin; make install"

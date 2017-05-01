@@ -77,9 +77,15 @@ bsd "chmod 777 /v8/tmp"
 bsd "cp /bin/ls /v8/bin/bls"
 bsd "/v8/usr/bin/v8"
 
-# build a v8 kernel
+# build a v8 kernel, enabling networking first
 v8 "bls"
 v8 "cd /usr/sys/alice"
+v8 "cat >> conf"
+sendline "pseudo-device   inet    6"
+sendline "pseudo-device   uarp    1"
+sendline "pseudo-device   tcp     32"
+sendline "pseudo-device   udp     32"
+send $ctrlD
 v8 "/etc/config"
 v8 "ed makefile"
 sendline "/rm locore"
