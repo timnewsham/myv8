@@ -152,18 +152,18 @@ ht0 at mba1 drive 0
 tu0 at ht0 slave 0
 tu1 at ht0 slave 1
 root on hp0
-WARNING: clock lost 67 days -- CHECK AND RESET THE DATE!
+WARNING: clock lost 65 days -- CHECK AND RESET THE DATE!
 WARNING: should run interleaved swap with >= 2Mb
 Automatic reboot in progress...
-Tue Apr 27 12:38:40 GMT 1976
+Fri Apr 30 10:19:24 GMT 1976
 /dev/hp0a: 676 files 4278 blocks 3345 free
 /dev/rhp0g: 1333 files 9198 blocks 132380 free
-Tue Apr 27 12:38:41 GMT 1976
+Fri Apr 30 10:19:25 GMT 1976
 Mounted /usr on /dev/hp0g  
 preserving editor files
 clearing /tmp
 starting daemons: update cron accounting network mail printer.
-Tue Apr 27 12:38:41 GMT 1976
+Fri Apr 30 10:19:25 GMT 1976
 
 
 Berkeley 4.1 VAX/UNIX (Amnesia-Vax)
@@ -207,7 +207,7 @@ File System: /usr
 # cd /v8/usr
 # rm -rf * .??*
 # 
-Simulation stopped, PC: 800013B2 (BRW 800013A4)
+Simulation stopped, PC: 800013A4 (FFS #0,#20,800255E0,R0)
 sim> at tu0 v8.tap
 sim> cont
 
@@ -215,13 +215,15 @@ sim> cont
 # tar xpb 20
 Tar: blocksize = 1
 # 
-Simulation stopped, PC: 800013AF (MTPR #0,#12)
+Simulation stopped, PC: 800013A4 (FFS #0,#20,800255E0,R0)
 sim> at tu0 v8jerq.tap
 sim> cont
 
 # cd /v8/usr
 # tar xpb 20
 Tar: blocksize = 1
+        Fri Apr 30 10:21:00 GMT 1976
+
 # cd /v8
 # ls
 bin        boot       etc        lib        proto-dev  usr
@@ -251,700 +253,20 @@ proto-dev
 tmp
 usr
 $ cd /usr/sys/alice
-$ /etc/config
-$ ed makefile
-/rm 27559
-locore
-        @rm locore.i
-s/rm/rm -f/
-wq
-27562
-$ make
-cc -DALICE -DVAX780 -DDISKMON ../conf/genassym.c; ./a.out >assym.s; rm -f a.out
-cat assym.s ../sys/scb.s ../sys/locore.s ubglue.s > locore.c
-cc -E -DLOCORE -DALICE -DVAX780 -DDISKMON -DKERNEL locore.c > locore.i
-as -o locore.o ${AHEADS} locore.i
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/acct.c
-/lib/c2 acct.s | sed -f ../sys/asm.sed | as -o acct.o
-rm -f acct.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/alloc.c
-/lib/c2 alloc.s | sed -f ../sys/asm.sed | as -o alloc.o
-rm -f alloc.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/calloc.c
-/lib/c2 calloc.s | sed -f ../sys/asm.sed | as -o calloc.o
-rm -f calloc.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/clock.c
-/lib/c2 clock.s | sed -f ../sys/asm.sed | as -o clock.o
-rm -f clock.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/fio.c
-/lib/c2 fio.s | sed -f ../sys/asm.sed | as -o fio.o
-rm -f fio.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/iget.c
-/lib/c2 iget.s | sed -f ../sys/asm.sed | as -o iget.o
-rm -f iget.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/ioctl.c
-/lib/c2 ioctl.s | sed -f ../sys/asm.sed | as -o ioctl.o
-rm -f ioctl.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/machdep.c
-/lib/c2 machdep.s | sed -f ../sys/asm.sed | as -o machdep.o
-rm -f machdep.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/main.c
-/lib/c2 main.s | sed -f ../sys/asm.sed | as -o main.o
-rm -f main.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/mp.c
-/lib/c2 mp.s | sed -f ../sys/asm.sed | as -o mp.o
-rm -f mp.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/nami.c
-/lib/c2 nami.s | sed -f ../sys/asm.sed | as -o nami.o
-rm -f nami.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/neta.c
-/lib/c2 neta.s | sed -f ../sys/asm.sed | as -o neta.o
-rm -f neta.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/partab.c
-/lib/c2 partab.s | sed -f ../sys/asm.sed | as -o partab.o
-rm -f partab.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/pipe.c
-/lib/c2 pipe.s | sed -f ../sys/asm.sed | as -o pipe.o
-rm -f pipe.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/prf.c
-/lib/c2 prf.s | sed -f ../sys/asm.sed | as -o prf.o
-rm -f prf.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/proca.c
-/lib/c2 proca.s | sed -f ../sys/asm.sed | as -o proca.o
-rm -f proca.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/rdwri.c
-/lib/c2 rdwri.s | sed -f ../sys/asm.sed | as -o rdwri.o
-rm -f rdwri.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/rmap.c
-/lib/c2 rmap.s | sed -f ../sys/asm.sed | as -o rmap.o
-rm -f rmap.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/sig.c
-/lib/c2 sig.s | sed -f ../sys/asm.sed | as -o sig.o
-rm -f sig.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/slp.c
-/lib/c2 slp.s | sed -f ../sys/asm.sed | as -o slp.o
-rm -f slp.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/streamio.c
-/lib/c2 streamio.s | sed -f ../sys/asm.sed | as -o streamio.o
-rm -f streamio.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/subr.c
-/lib/c2 subr.s | sed -f ../sys/asm.sed | as -o subr.o
-rm -f subr.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/sys1.c
-/lib/c2 sys1.s | sed -f ../sys/asm.sed | as -o sys1.o
-rm -f sys1.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/sys2.c
-/lib/c2 sys2.s | sed -f ../sys/asm.sed | as -o sys2.o
-rm -f sys2.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/sys3.c
-/lib/c2 sys3.s | sed -f ../sys/asm.sed | as -o sys3.o
-rm -f sys3.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/sys4.c
-/lib/c2 sys4.s | sed -f ../sys/asm.sed | as -o sys4.o
-rm -f sys4.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/sysent.c
-/lib/c2 sysent.s | sed -f ../sys/asm.sed | as -o sysent.o
-rm -f sysent.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/text.c
-/lib/c2 text.s | sed -f ../sys/asm.sed | as -o text.o
-rm -f text.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/trap.c
-/lib/c2 trap.s | sed -f ../sys/asm.sed | as -o trap.o
-rm -f trap.s
-as -o udiv.o ../sys/udiv.s
-as -o urem.o ../sys/urem.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/vaxtrap.c
-        Tue Apr 27 12:41:00 GMT 1976
-
-/lib/c2 vaxtrap.s | sed -f ../sys/asm.sed | as -o vaxtrap.o
-rm -f vaxtrap.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/vmdrum.c
-/lib/c2 vmdrum.s | sed -f ../sys/asm.sed | as -o vmdrum.o
-rm -f vmdrum.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/vmmem.c
-/lib/c2 vmmem.s | sed -f ../sys/asm.sed | as -o vmmem.o
-rm -f vmmem.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/vmmon.c
-/lib/c2 vmmon.s | sed -f ../sys/asm.sed | as -o vmmon.o
-rm -f vmmon.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/vmpage.c
-/lib/c2 vmpage.s | sed -f ../sys/asm.sed | as -o vmpage.o
-rm -f vmpage.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/vmproc.c
-/lib/c2 vmproc.s | sed -f ../sys/asm.sed | as -o vmproc.o
-rm -f vmproc.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/vmpt.c
-/lib/c2 vmpt.s | sed -f ../sys/asm.sed | as -o vmpt.o
-rm -f vmpt.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/vmsched.c
-/lib/c2 vmsched.s | sed -f ../sys/asm.sed | as -o vmsched.o
-rm -f vmsched.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/vmsubr.c
-/lib/c2 vmsubr.s | sed -f ../sys/asm.sed | as -o vmsubr.o
-rm -f vmsubr.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/vmswap.c
-/lib/c2 vmswap.s | sed -f ../sys/asm.sed | as -o vmswap.o
-rm -f vmswap.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../sys/vmsys.c
-/lib/c2 vmsys.s | sed -f ../sys/asm.sed | as -o vmsys.o
-rm -f vmsys.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/bio.c
-/lib/c2 bio.s | sed -f ../sys/asm.sed | as -o bio.o
-rm -f bio.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/streamconf.c
-/lib/c2 streamconf.s | sed -f ../sys/asm.sed | as -o streamconf.o
-rm -f streamconf.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/cons.c
-/lib/c2 cons.s | sed -f ../sys/asm.sed | as -o cons.o
-rm -f cons.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/dkbad.c
-/lib/c2 dkbad.s | sed -f ../sys/asm.sed | as -o dkbad.o
-rm -f dkbad.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/dkleave.c
-/lib/c2 dkleave.s | sed -f ../sys/asm.sed | as -o dkleave.o
-rm -f dkleave.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/dsort.c
-/lib/c2 dsort.s | sed -f ../sys/asm.sed | as -o dsort.o
-rm -f dsort.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/flp.c
-/lib/c2 flp.s | sed -f ../sys/asm.sed | as -o flp.o
-rm -f flp.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/mem.c
-/lib/c2 mem.s | sed -f ../sys/asm.sed | as -o mem.o
-rm -f mem.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/stream.c
-/lib/c2 stream.s | sed -f ../sys/asm.sed | as -o stream.o
-rm -f stream.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/sw.c
-/lib/c2 sw.s | sed -f ../sys/asm.sed | as -o sw.o
-rm -f sw.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/vaxcpu.c
-/lib/c2 vaxcpu.s | sed -f ../sys/asm.sed | as -o vaxcpu.o
-rm -f vaxcpu.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/autoconf.c
-/lib/c2 -i autoconf.s | sed -f ../sys/asm.sed | as -o autoconf.o
-rm -f autoconf.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/uba.c
-/lib/c2 -i uba.s | sed -f ../sys/asm.sed | as -o uba.o
-rm -f uba.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/dk.c
-/lib/c2 -i dk.s | sed -f ../sys/asm.sed | as -o dk.o
-rm -f dk.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/dn.c
-/lib/c2 -i dn.s | sed -f ../sys/asm.sed | as -o dn.o
-rm -f dn.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/dr.c
-/lib/c2 -i dr.s | sed -f ../sys/asm.sed | as -o dr.o
-rm -f dr.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/dz.c
-/lib/c2 -i dz.s | sed -f ../sys/asm.sed | as -o dz.o
-rm -f dz.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/hp.c
-/lib/c2 -i hp.s | sed -f ../sys/asm.sed | as -o hp.o
-rm -f hp.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/ht.c
-/lib/c2 -i ht.s | sed -f ../sys/asm.sed | as -o ht.o
-rm -f ht.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/kdi.c
-/lib/c2 -i kdi.s | sed -f ../sys/asm.sed | as -o kdi.o
-rm -f kdi.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/kmc.c
-/lib/c2 -i kmc.s | sed -f ../sys/asm.sed | as -o kmc.o
-rm -f kmc.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/mba.c
-/lib/c2 -i mba.s | sed -f ../sys/asm.sed | as -o mba.o
-rm -f mba.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/mt.c
-/lib/c2 -i mt.s | sed -f ../sys/asm.sed | as -o mt.o
-rm -f mt.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/tri.c
-/lib/c2 -i tri.s | sed -f ../sys/asm.sed | as -o tri.o
-rm -f tri.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/uda.c
-/lib/c2 -i uda.s | sed -f ../sys/asm.sed | as -o uda.o
-rm -f uda.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/bufld.c
-/lib/c2 -i bufld.s | sed -f ../sys/asm.sed | as -o bufld.o
-rm -f bufld.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/cmcld.c
-/lib/c2 -i cmcld.s | sed -f ../sys/asm.sed | as -o cmcld.o
-rm -f cmcld.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/dkp.c
-/lib/c2 -i dkp.s | sed -f ../sys/asm.sed | as -o dkp.o
-rm -f dkp.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/mesg.c
-/lib/c2 -i mesg.s | sed -f ../sys/asm.sed | as -o mesg.o
-rm -f mesg.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/nttyld.c
-/lib/c2 -i nttyld.s | sed -f ../sys/asm.sed | as -o nttyld.o
-rm -f nttyld.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/spipe.c
-/lib/c2 -i spipe.s | sed -f ../sys/asm.sed | as -o spipe.o
-rm -f spipe.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/ttyld.c
-/lib/c2 -i ttyld.s | sed -f ../sys/asm.sed | as -o ttyld.o
-rm -f ttyld.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/connld.c
-/lib/c2 -i connld.s | sed -f ../sys/asm.sed | as -o connld.o
-rm -f connld.s
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ioconf.c
-/lib/c2 ioconf.s | sed -f ../sys/asm.sed | as -o ioconf.o
-rm -f ioconf.s
-cc -O -DALICE -DVAX780 -DDISKMON -DKERNEL -c conf.c
-cp ../sys/param.c .
-cc -c -O -DALICE -DVAX780 -DDISKMON -DHZ=60 -DTIMEZONE=300 -DDST=1 -DMAXUSERS=60 param.c
-cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/swapalice.c
-/lib/c2 swapalice.s | sed -f ../sys/asm.sed | as -o swapalice.o
-rm -f swapalice.s
-loading unix
-text    data    bss     dec     hex
-139248  52980   370724  562952  89708
-$ 
-$ ^D# cp /v8/usr/sys/alice/unix /v8/unix
-# cd /v8/usr/sys/alice
-# rm eddep *.o locore.i
-# cd /
-# umount /dev/hp1g
-# umount /dev/hp1a
-# sync; sync; sync
-# halt
-syncing disks... done
-halting (in tight loop); hit
-	^P
-	HALT
-
-
-Infinite loop, PC: 80003AD5 (BRB 80003AD5)
-sim> exit
-Goodbye
-spawn vax780
-
-VAX780 simulator V3.9-0
-sim> set tto 7b
-sim> set dz lines=8
-sim> set rp0 rp06
-sim> at rp0 rp06v8
-sim> set tu0 te16
-sim> load -o bootV8 0
-sim> run 2
-
-Boot
-: hp(0,0)unix
-139248+52980+370724 start 0xf48
-Unix 8th Edition Tue Apr 27 12:41:48 GMT 1976
-real mem = 8322048 nbuf = 254 nswbuf = 126
-avail mem = 6348800
-mcr0 at tr1
-mcr1 at tr2
-uba0 at tr3
-uda1 uba0 csr 172150 vec 0774 ipl x15
-ra1 at uda1 sl1 
-ra3 at uda1 sl3 
-ra5 at uda1 sl5 
-dz0 at uba0 csr 160100 vec 0300 ipl x15
-mba0 at tr8
-hp0 at mba0 drive 0
-hp1 at mba0 drive 1
-mba1 at tr9
-ht0 at mba1 drive 0
-WARNING: preposterous time in file system -- CHECK AND RESET THE DATE!
-/: bad count
-Sun Jul  4 08:00:00 EDT 1976
-Autoboot:
-Can't stat /dev/ra00
-Automatic reboot failed... help!
-# /etc/fsck -y /dev/rrp0a
-
-/dev/rrp0a
-File System: /
-
-** Checking /dev/rrp0a
-** Phase 1 - Check Blocks and Sizes
-** Phase 2 - Check Pathnames
-** Phase 3 - Check Connectivity
-** Phase 4 - Check Reference Counts
-FREE INODE COUNT 2699 SHOULD BE 4924 IN SUPERBLK
-FIX?  yes
-
-** Phase 5 - Check Free List 
-5367 BLK(S) MISSING
-BAD FREE LIST
-SALVAGE?  yes
-
-** Phase 6 - Salvage Free List
-Default free list spacing assumed
-148 files 2256 blocks 5367 free
-
-***** FILE SYSTEM WAS MODIFIED *****
-# /etc/fsck -y /dev/rrp0g
-
-/dev/rrp0g
-File System: 
-
-** Checking /dev/rrp0g
-** Phase 1 - Check Blocks and Sizes
-** Phase 2 - Check Pathnames
-** Phase 3 - Check Connectivity
-** Phase 4 - Check Reference Counts
-FREE INODE COUNT 54277 SHOULD BE 56758 IN SUPERBLK
-FIX?  yes
-
-** Phase 5 - Check Free List 
-BAD FREEBLK COUNT
-BAD FREE LIST
-SALVAGE?  yes
-
-** Phase 6 - Salvage Free List
-Default free list spacing assumed
-8730 files 50983 blocks 90595 free
-
-***** FILE SYSTEM WAS MODIFIED *****
-# sync; sync; sync
-# /etc/halt
-syncing disks... done
-halting (in tight loop); hit
-	^P
-	HALT
-
-
-Infinite loop, PC: 8000412C (BRB 8000412C)
-sim> exit
-Goodbye
-spawn vax780
-
-VAX780 simulator V3.9-0
-sim> set tto 7b
-sim> set dz lines=8
-sim> set rp0 rp06
-sim> at rp0 rp06v8
-sim> set tu0 te16
-sim> load -o bootV8 0
-sim> run 2
-
-Boot
-: hp(0,0)unix
-139248+52980+370724 start 0xf48
-Unix 8th Edition Tue Apr 27 12:41:48 GMT 1976
-real mem = 8322048 nbuf = 254 nswbuf = 126
-avail mem = 6348800
-mcr0 at tr1
-mcr1 at tr2
-uba0 at tr3
-uda1 uba0 csr 172150 vec 0774 ipl x15
-ra1 at uda1 sl1 
-ra3 at uda1 sl3 
-ra5 at uda1 sl5 
-dz0 at uba0 csr 160100 vec 0300 ipl x15
-mba0 at tr8
-hp0 at mba0 drive 0
-hp1 at mba0 drive 1
-mba1 at tr9
-ht0 at mba1 drive 0
-WARNING: clock lost 67 days -- CHECK AND RESET THE DATE!
-Tue Apr 27 08:40:49 EDT 1976
-Autoboot:
-Can't stat /dev/ra00
-Automatic reboot failed... help!
-# /etc/fsck -y /dev/rrp0a
-
-/dev/rrp0a
-File System: /
-
-** Checking /dev/rrp0a
-** Phase 1 - Check Blocks and Sizes
-** Phase 2 - Check Pathnames
-** Phase 3 - Check Connectivity
-** Phase 4 - Check Reference Counts
-** Phase 5 - Check Free List 
-148 files 2256 blocks 5367 free
-# /etc/fsck -y /dev/rrp0g
-
-/dev/rrp0g
-File System: 
-
-** Checking /dev/rrp0g
-** Phase 1 - Check Blocks and Sizes
-** Phase 2 - Check Pathnames
-** Phase 3 - Check Connectivity
-** Phase 4 - Check Reference Counts
-** Phase 5 - Check Free List 
-8730 files 50983 blocks 90595 free
-# cat > /etc/fstab
-/dev/rp0a:/:rw:1:1
-/dev/rp0g:/usr:rw:1:2
-# /etc/mount -a
-Mounted /dev/rp0g on /usr
-# mkdir /proc
-# mkdir /usr/adm
-# mkdir /usr/tmp
-# rm -f /dev/*
-# /etc/mknod /dev/rp0a b 0 0
-# chmod 600 /dev/rp0a
-# /etc/mknod /dev/rrp0a c 4 0
-# chmod 600 /dev/rrp0a
-# /etc/mknod /dev/rp0g b 0 6
-# chmod 600 /dev/rp0g
-# /etc/mknod /dev/rrp0g c 4 6
-# chmod 600 /dev/rrp0g
-# /etc/mknod /dev/console c 0 0
-# chmod 622 /dev/console
-# /etc/chown root,0 /dev/console
-# mkdir /dev/dk
-# chmod 775 /dev/dk
-# /etc/chown root,sys /dev/dk
-# /etc/mknod /dev/dn0 c 19 128
-# chmod 666 /dev/dn0
-# /etc/chown root,bin /dev/dn0
-# /etc/mknod /dev/drum c 7 0
-# chmod 644 /dev/drum
-# /etc/chown root,man /dev/drum
-# mkdir /dev/fd
-# chmod 755 /dev/fd
-# /etc/chown root,other /dev/fd
-# /etc/mknod /dev/ip0 c 42 0
-# chmod 666 /dev/ip0
-# /etc/chown root,bin /dev/ip0
-# /etc/mknod /dev/ip16 c 42 16
-# chmod 666 /dev/ip16
-# /etc/chown root,bin /dev/ip16
-# /etc/mknod /dev/ip17 c 42 17
-# chmod 666 /dev/ip17
-# /etc/chown root,bin /dev/ip17
-# /etc/mknod /dev/ip6 c 42 6
-# chmod 666 /dev/ip6
-# /etc/chown root,bin /dev/ip6
-# /etc/mknod /dev/kUmem c 3 3
-# chmod 600 /dev/kUmem
-# /etc/chown root,sys /dev/kUmem
-# /etc/mknod /dev/kmc0 c 26 0
-# chmod 666 /dev/kmc0
-# /etc/chown root,sys /dev/kmc0
-# /etc/mknod /dev/kmem c 3 1
-# chmod 644 /dev/kmem
-# /etc/chown root,sys /dev/kmem
-# /etc/mknod /dev/kmemr c 3 4
-# chmod 444 /dev/kmemr
-# /etc/chown root,bin /dev/kmemr
-# /etc/mknod /dev/mem c 3 0
-# chmod 644 /dev/mem
-# /etc/chown root,sys /dev/mem
-# /etc/mknod /dev/mt1 b 8 0
-# chmod 666 /dev/mt1
-# /etc/chown root,sys /dev/mt1
-# /etc/mknod /dev/mt2 b 8 8
-# chmod 666 /dev/mt2
-# /etc/chown root,sys /dev/mt2
-# /etc/mknod /dev/mt5 b 8 4
-# chmod 666 /dev/mt5
-# /etc/chown root,sys /dev/mt5
-# /etc/mknod /dev/mt6 b 8 12
-# chmod 666 /dev/mt6
-# /etc/chown root,sys /dev/mt6
-# /etc/mknod /dev/mtpr c 3 5
-# chmod 600 /dev/mtpr
-# /etc/chown root,0 /dev/mtpr
-# /etc/mknod /dev/nmt1 b 8 4
-# chmod 666 /dev/nmt1
-# /etc/chown root,sys /dev/nmt1
-# /etc/mknod /dev/nmt2 b 8 12
-# chmod 666 /dev/nmt2
-# /etc/chown root,sys /dev/nmt2
-# /etc/mknod /dev/nrmt1 c 22 4
-# chmod 666 /dev/nrmt1
-# /etc/chown root,sys /dev/nrmt1
-# /etc/mknod /dev/nrmt2 c 22 12
-# chmod 666 /dev/nrmt2
-# /etc/chown root,sys /dev/nrmt2
-# /etc/mknod /dev/null c 3 2
-# chmod 666 /dev/null
-# /etc/chown root,man /dev/null
-# mkdir /dev/pt
-# chmod 755 /dev/pt
-# /etc/chown pjw,other /dev/pt
-unknown user id: pjw
-# /etc/mknod /dev/ra00 b 7 64
-# chmod 640 /dev/ra00
-# /etc/chown root,sys /dev/ra00
-# /etc/mknod /dev/ra01 b 7 1
-# chmod 640 /dev/ra01
-# /etc/chown root,sys /dev/ra01
-# /etc/mknod /dev/ra02 b 7 66
-# chmod 640 /dev/ra02
-# /etc/chown root,sys /dev/ra02
-# /etc/mknod /dev/ra03 b 7 67
-# chmod 640 /dev/ra03
-# /etc/chown root,sys /dev/ra03
-# /etc/mknod /dev/ra04 b 7 68
-# chmod 640 /dev/ra04
-# /etc/chown root,sys /dev/ra04
-# /etc/mknod /dev/ra05 b 7 69
-# chmod 640 /dev/ra05
-# /etc/chown root,sys /dev/ra05
-# /etc/mknod /dev/ra06 b 7 70
-# chmod 640 /dev/ra06
-# /etc/chown root,sys /dev/ra06
-# /etc/mknod /dev/ra10 b 7 72
-# chmod 640 /dev/ra10
-# /etc/chown root,sys /dev/ra10
-# /etc/mknod /dev/ra11 b 7 9
-# chmod 640 /dev/ra11
-# /etc/chown root,sys /dev/ra11
-# /etc/mknod /dev/ra12 b 7 74
-# chmod 640 /dev/ra12
-# /etc/chown root,sys /dev/ra12
-# /etc/mknod /dev/ra13 b 7 75
-# chmod 640 /dev/ra13
-# /etc/chown root,sys /dev/ra13
-# /etc/mknod /dev/ra14 b 7 76
-# chmod 640 /dev/ra14
-# /etc/chown root,sys /dev/ra14
-# /etc/mknod /dev/ra15 b 7 77
-# chmod 640 /dev/ra15
-# /etc/chown root,sys /dev/ra15
-# /etc/mknod /dev/ra16 b 7 78
-# chmod 640 /dev/ra16
-# /etc/chown root,sys /dev/ra16
-# /etc/mknod /dev/ra20a b 7 80
-# chmod 664 /dev/ra20a
-# /etc/chown root,bin /dev/ra20a
-# /etc/mknod /dev/ra21 b 7 17
-# chmod 640 /dev/ra21
-# /etc/chown root,sys /dev/ra21
-# /etc/mknod /dev/ra22 b 7 18
-# chmod 664 /dev/ra22
-# /etc/chown root,bin /dev/ra22
-# /etc/mknod /dev/ra23 b 7 83
-# chmod 640 /dev/ra23
-# /etc/chown root,sys /dev/ra23
-# /etc/mknod /dev/ra24 b 7 84
-# chmod 640 /dev/ra24
-# /etc/chown root,sys /dev/ra24
-# /etc/mknod /dev/ra25 b 7 85
-# chmod 640 /dev/ra25
-# /etc/chown root,sys /dev/ra25
-# /etc/mknod /dev/ra26 b 7 22
-# chmod 640 /dev/ra26
-# /etc/chown root,sys /dev/ra26
-# /etc/mknod /dev/rmt1 c 22 0
-# chmod 666 /dev/rmt1
-# /etc/chown root,sys /dev/rmt1
-# /etc/mknod /dev/rmt2 c 22 8
-# chmod 666 /dev/rmt2
-# /etc/chown root,sys /dev/rmt2
-# /etc/mknod /dev/rmt5 c 22 4
-# chmod 666 /dev/rmt5
-# /etc/chown root,sys /dev/rmt5
-# /etc/mknod /dev/rmt6 c 22 12
-# chmod 666 /dev/rmt6
-# /etc/chown root,sys /dev/rmt6
-# /etc/mknod /dev/rra00 c 28 0
-# chmod 640 /dev/rra00
-# /etc/chown root,sys /dev/rra00
-# /etc/mknod /dev/rra01 c 28 1
-# chmod 640 /dev/rra01
-# /etc/chown root,sys /dev/rra01
-# /etc/mknod /dev/rra02 c 28 2
-# chmod 640 /dev/rra02
-# /etc/chown root,sys /dev/rra02
-# /etc/mknod /dev/rra03 c 28 3
-# chmod 640 /dev/rra03
-# /etc/chown root,sys /dev/rra03
-# /etc/mknod /dev/rra04 c 28 4
-# chmod 640 /dev/rra04
-# /etc/chown root,sys /dev/rra04
-# /etc/mknod /dev/rra05 c 28 5
-# chmod 640 /dev/rra05
-# /etc/chown root,sys /dev/rra05
-# /etc/mknod /dev/rra06 c 28 6
-# chmod 640 /dev/rra06
-# /etc/chown root,sys /dev/rra06
-# /etc/mknod /dev/rra07 c 28 7
-# chmod 640 /dev/rra07
-# /etc/chown root,sys /dev/rra07
-# /etc/mknod /dev/rra10 c 28 8
-# chmod 660 /dev/rra10
-# /etc/chown root,sys /dev/rra10
-# /etc/mknod /dev/rra11 c 28 9
-# chmod 640 /dev/rra11
-# /etc/chown root,sys /dev/rra11
-# /etc/mknod /dev/rra12 c 28 10
-# chmod 640 /dev/rra12
-# /etc/chown root,sys /dev/rra12
-# /etc/mknod /dev/rra13 c 28 11
-# chmod 640 /dev/rra13
-# /etc/chown root,sys /dev/rra13
-# /etc/mknod /dev/rra14 c 28 12
-# chmod 640 /dev/rra14
-# /etc/chown root,sys /dev/rra14
-# /etc/mknod /dev/rra15 c 28 13
-# chmod 640 /dev/rra15
-# /etc/chown root,sys /dev/rra15
-# /etc/mknod /dev/rra16 c 28 14
-# chmod 660 /dev/rra16
-# /etc/chown root,sys /dev/rra16
-# /etc/mknod /dev/rra17 c 28 15
-# chmod 640 /dev/rra17
-# /etc/chown root,sys /dev/rra17
-# /etc/mknod /dev/rra20 c 28 16
-# chmod 640 /dev/rra20
-# /etc/chown root,sys /dev/rra20
-# /etc/mknod /dev/rra21 c 28 17
-# chmod 640 /dev/rra21
-# /etc/chown root,sys /dev/rra21
-# /etc/mknod /dev/rra22 c 28 18
-# chmod 640 /dev/rra22
-# /etc/chown root,sys /dev/rra22
-# /etc/mknod /dev/rra23 c 28 19
-# chmod 640 /dev/rra23
-# /etc/chown root,sys /dev/rra23
-# /etc/mknod /dev/rra24 c 28 20
-# chmod 640 /dev/rra24
-# /etc/chown root,sys /dev/rra24
-# /etc/mknod /dev/rra25 c 28 21
-# chmod 640 /dev/rra25
-# /etc/chown root,sys /dev/rra25
-# /etc/mknod /dev/rra26 c 28 22
-# chmod 640 /dev/rra26
-# /etc/chown root,sys /dev/rra26
-# /etc/mknod /dev/rra27 c 28 23
-# chmod 640 /dev/rra27
-# /etc/chown root,sys /dev/rra27
-# /etc/mknod /dev/stderr c 40 2
-# chmod 666 /dev/stderr
-# /etc/chown root,other /dev/stderr
-# /etc/mknod /dev/stdin c 40 0
-# chmod 666 /dev/stdin
-# /etc/chown root,other /dev/stdin
-# /etc/mknod /dev/stdout c 40 1
-# chmod 666 /dev/stdout
-# /etc/chown root,other /dev/stdout
-# /etc/mknod /dev/tty c 40 3
-# chmod 666 /dev/tty
-# /etc/chown root,other /dev/tty
-# for n in 00 01 02 03 04 05 06 07 09 10 11; do /etc/mknod /dev/tcp$n c 43 $n; chmod 666 /dev/tcp$n; /etc/chown root,bin /dev/tcp$n; done
-# for n in 00 01 02 03 04 05 06 07; do /etc/mknod /dev/tty$n c 1 $n; chmod 622 /dev/tty$n; /etc/chown root,0 /dev/tty$n; done
-# for n in 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95; do /etc/mknod /dev/dk/dk$n c 31 $n; chmod 666 /dev/dk/dk$n; /etc/chown root,sys /dev/dk/dk$n; done
-# for n in 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 ; do /etc/mknod /dev/fd/$n c 40 $n; chmod 666 /dev/fd/$n; /etc/chown root,other /dev/fd/$n; done
-# for n in 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 ; do /etc/mknod /dev/fd/$n c 40 $n; chmod 666 /dev/fd/$n; /etc/chown root,other /dev/fd/$n; done
-# for n in 00 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 ; do /etc/mknod /dev/pt/pt$n c 18 $n; chmod 666 /dev/pt/pt$n; /etc/chown root,sys /dev/pt/pt$n; done
-# cat >/etc/ttys
-14console
-12tty00
-12tty01
-12tty02
-12tty03
-12tty04
-12tty05
-12tty06
-12tty07
-# cd /usr/sys/alice
-# cat >> conf
+$ cat >> conf
 pseudo-device   inet    6
 pseudo-device   uarp    1
 pseudo-device   tcp     32
 pseudo-device   udp     32
-# /etc/config
-# make
+^D$ /etc/config
+$ ed makefile
+/rm lo34608
+core
+        @rm locore.i
+s/rm/rm -f/
+wq
+34611
+$ make
 cc -DALICE -DVAX780 -DDISKMON ../conf/genassym.c; ./a.out >assym.s; rm -f a.out
 cat assym.s ../sys/scb.s ../sys/locore.s ubglue.s > locore.c
 cc -E -DLOCORE -DALICE -DVAX780 -DDISKMON -DKERNEL locore.c > locore.i
@@ -1232,11 +554,452 @@ cc -I. -c -S -DALICE -DVAX780 -DDISKMON -DKERNEL ../dev/swapalice.c
 /lib/c2 swapalice.s | sed -f ../sys/asm.sed | as -o swapalice.o
 rm -f swapalice.s
 loading unix
-text	data	bss	dec	hex
-159316	54592	381508	595416	915d8
-# cp unix /
-# make clean
-rm -f eddep *unix* tags *.o locore.i [a-tv-z]*.s errs linterrs
+text    data    bss     dec     hex
+159316  54592   381508  595416  915d8
+$ 
+$ ^D# cp /v8/usr/sys/alice/unix /v8/unix
+# cd /v8/usr/sys/alice
+# rm eddep *.o locore.i
+# cd /
+# umount /dev/hp1g
+# umount /dev/hp1a
+# sync; sync; sync
+# halt
+syncing disks... done
+halting (in tight loop); hit
+	^P
+	HALT
+
+
+Infinite loop, PC: 80003AD5 (BRB 80003AD5)
+sim> exit
+Goodbye
+spawn vax780
+
+VAX780 simulator V3.9-0
+sim> set tto 7b
+sim> set dz lines=8
+sim> set rp0 rp06
+sim> at rp0 rp06v8
+sim> set tu0 te16
+sim> load -o bootV8 0
+sim> run 2
+
+Boot
+: hp(0,0)unix
+159316+54592+381508 start 0xf48
+Unix 8th Edition Fri Apr 30 10:22:54 GMT 1976
+real mem = 8322048 nbuf = 254 nswbuf = 126
+avail mem = 6316032
+mcr0 at tr1
+mcr1 at tr2
+uba0 at tr3
+uda1 uba0 csr 172150 vec 0774 ipl x15
+ra1 at uda1 sl1 
+ra3 at uda1 sl3 
+ra5 at uda1 sl5 
+dz0 at uba0 csr 160100 vec 0300 ipl x15
+mba0 at tr8
+hp0 at mba0 drive 0
+hp1 at mba0 drive 1
+mba1 at tr9
+ht0 at mba1 drive 0
+WARNING: preposterous time in file system -- CHECK AND RESET THE DATE!
+/: bad count
+Sun Jul  4 08:00:00 EDT 1976
+Autoboot:
+Can't stat /dev/ra00
+Automatic reboot failed... help!
+# /etc/fsck -y /dev/rrp0a
+
+/dev/rrp0a
+File System: /
+
+** Checking /dev/rrp0a
+** Phase 1 - Check Blocks and Sizes
+** Phase 2 - Check Pathnames
+** Phase 3 - Check Connectivity
+** Phase 4 - Check Reference Counts
+FREE INODE COUNT 2809 SHOULD BE 4924 IN SUPERBLK
+FIX?  yes
+
+** Phase 5 - Check Free List 
+5318 BLK(S) MISSING
+BAD FREE LIST
+SALVAGE?  yes
+
+** Phase 6 - Salvage Free List
+Default free list spacing assumed
+148 files 2305 blocks 5318 free
+
+***** FILE SYSTEM WAS MODIFIED *****
+# /etc/fsck -y /dev/rrp0g
+
+/dev/rrp0g
+File System: 
+
+** Checking /dev/rrp0g
+** Phase 1 - Check Blocks and Sizes
+** Phase 2 - Check Pathnames
+** Phase 3 - Check Connectivity
+** Phase 4 - Check Reference Counts
+FREE INODE COUNT 53495 SHOULD BE 56741 IN SUPERBLK
+FIX?  yes
+
+** Phase 5 - Check Free List 
+BAD FREEBLK COUNT
+BAD FREE LIST
+SALVAGE?  yes
+
+** Phase 6 - Salvage Free List
+Default free list spacing assumed
+8747 files 51265 blocks 90313 free
+
+***** FILE SYSTEM WAS MODIFIED *****
+# sync; sync; sync
+# /etc/halt
+syncing disks... done
+halting (in tight loop); hit
+	^P
+	HALT
+
+
+Infinite loop, PC: 8000412C (BRB 8000412C)
+sim> exit
+Goodbye
+spawn vax780
+
+VAX780 simulator V3.9-0
+sim> set tto 7b
+sim> set dz lines=8
+sim> set rp0 rp06
+sim> at rp0 rp06v8
+sim> set tu0 te16
+sim> load -o bootV8 0
+sim> run 2
+
+Boot
+: hp(0,0)unix
+159316+54592+381508 start 0xf48
+Unix 8th Edition Fri Apr 30 10:22:54 GMT 1976
+real mem = 8322048 nbuf = 254 nswbuf = 126
+avail mem = 6316032
+mcr0 at tr1
+mcr1 at tr2
+uba0 at tr3
+uda1 uba0 csr 172150 vec 0774 ipl x15
+ra1 at uda1 sl1 
+ra3 at uda1 sl3 
+ra5 at uda1 sl5 
+dz0 at uba0 csr 160100 vec 0300 ipl x15
+mba0 at tr8
+hp0 at mba0 drive 0
+hp1 at mba0 drive 1
+mba1 at tr9
+ht0 at mba1 drive 0
+WARNING: clock lost 65 days -- CHECK AND RESET THE DATE!
+Fri Apr 30 06:21:47 EDT 1976
+Autoboot:
+Can't stat /dev/ra00
+Automatic reboot failed... help!
+# /etc/fsck -y /dev/rrp0a
+
+/dev/rrp0a
+File System: /
+
+** Checking /dev/rrp0a
+** Phase 1 - Check Blocks and Sizes
+** Phase 2 - Check Pathnames
+** Phase 3 - Check Connectivity
+** Phase 4 - Check Reference Counts
+** Phase 5 - Check Free List 
+148 files 2305 blocks 5318 free
+# /etc/fsck -y /dev/rrp0g
+
+/dev/rrp0g
+File System: 
+
+** Checking /dev/rrp0g
+** Phase 1 - Check Blocks and Sizes
+** Phase 2 - Check Pathnames
+** Phase 3 - Check Connectivity
+** Phase 4 - Check Reference Counts
+** Phase 5 - Check Free List 
+8747 files 51265 blocks 90313 free
+# cat > /etc/fstab
+/dev/rp0a:/:rw:1:1
+/dev/rp0g:/usr:rw:1:2
+# /etc/mount -a
+Mounted /dev/rp0g on /usr
+# mkdir /proc
+# mkdir /usr/adm
+# mkdir /usr/tmp
+# rm -f /dev/*
+# /etc/mknod /dev/rp0a b 0 0
+# chmod 600 /dev/rp0a
+# /etc/mknod /dev/rrp0a c 4 0
+# chmod 600 /dev/rrp0a
+# /etc/mknod /dev/rp0g b 0 6
+# chmod 600 /dev/rp0g
+# /etc/mknod /dev/rrp0g c 4 6
+# chmod 600 /dev/rrp0g
+# /etc/mknod /dev/console c 0 0
+# chmod 622 /dev/console
+# /etc/chown root,0 /dev/console
+# mkdir /dev/dk
+# chmod 775 /dev/dk
+# /etc/chown root,sys /dev/dk
+# /etc/mknod /dev/dn0 c 19 128
+# chmod 666 /dev/dn0
+# /etc/chown root,bin /dev/dn0
+# /etc/mknod /dev/drum c 7 0
+# chmod 644 /dev/drum
+# /etc/chown root,man /dev/drum
+# mkdir /dev/fd
+# chmod 755 /dev/fd
+# /etc/chown root,other /dev/fd
+# /etc/mknod /dev/ip0 c 42 0
+# chmod 666 /dev/ip0
+# /etc/chown root,bin /dev/ip0
+# /etc/mknod /dev/ip16 c 42 16
+# chmod 666 /dev/ip16
+# /etc/chown root,bin /dev/ip16
+# /etc/mknod /dev/ip17 c 42 17
+# chmod 666 /dev/ip17
+# /etc/chown root,bin /dev/ip17
+# /etc/mknod /dev/ip6 c 42 6
+# chmod 666 /dev/ip6
+# /etc/chown root,bin /dev/ip6
+# /etc/mknod /dev/kUmem c 3 3
+# chmod 600 /dev/kUmem
+# /etc/chown root,sys /dev/kUmem
+# /etc/mknod /dev/kmc0 c 26 0
+# chmod 666 /dev/kmc0
+# /etc/chown root,sys /dev/kmc0
+# /etc/mknod /dev/kmem c 3 1
+# chmod 644 /dev/kmem
+# /etc/chown root,sys /dev/kmem
+# /etc/mknod /dev/kmemr c 3 4
+# chmod 444 /dev/kmemr
+# /etc/chown root,bin /dev/kmemr
+# /etc/mknod /dev/mem c 3 0
+# chmod 644 /dev/mem
+# /etc/chown root,sys /dev/mem
+# /etc/mknod /dev/mt1 b 8 0
+# chmod 666 /dev/mt1
+# /etc/chown root,sys /dev/mt1
+# /etc/mknod /dev/mt2 b 8 8
+# chmod 666 /dev/mt2
+# /etc/chown root,sys /dev/mt2
+# /etc/mknod /dev/mt5 b 8 4
+# chmod 666 /dev/mt5
+# /etc/chown root,sys /dev/mt5
+# /etc/mknod /dev/mt6 b 8 12
+# chmod 666 /dev/mt6
+# /etc/chown root,sys /dev/mt6
+# /etc/mknod /dev/mtpr c 3 5
+# chmod 600 /dev/mtpr
+# /etc/chown root,0 /dev/mtpr
+# /etc/mknod /dev/nmt1 b 8 4
+# chmod 666 /dev/nmt1
+# /etc/chown root,sys /dev/nmt1
+# /etc/mknod /dev/nmt2 b 8 12
+# chmod 666 /dev/nmt2
+# /etc/chown root,sys /dev/nmt2
+# /etc/mknod /dev/nrmt1 c 22 4
+# chmod 666 /dev/nrmt1
+# /etc/chown root,sys /dev/nrmt1
+# /etc/mknod /dev/nrmt2 c 22 12
+# chmod 666 /dev/nrmt2
+# /etc/chown root,sys /dev/nrmt2
+# /etc/mknod /dev/null c 3 2
+# chmod 666 /dev/null
+# /etc/chown root,man /dev/null
+# mkdir /dev/pt
+# chmod 755 /dev/pt
+# /etc/chown pjw,other /dev/pt
+unknown user id: pjw
+# /etc/mknod /dev/ra00 b 7 64
+# chmod 640 /dev/ra00
+# /etc/chown root,sys /dev/ra00
+# /etc/mknod /dev/ra01 b 7 1
+# chmod 640 /dev/ra01
+# /etc/chown root,sys /dev/ra01
+# /etc/mknod /dev/ra02 b 7 66
+# chmod 640 /dev/ra02
+# /etc/chown root,sys /dev/ra02
+# /etc/mknod /dev/ra03 b 7 67
+# chmod 640 /dev/ra03
+# /etc/chown root,sys /dev/ra03
+# /etc/mknod /dev/ra04 b 7 68
+# chmod 640 /dev/ra04
+# /etc/chown root,sys /dev/ra04
+# /etc/mknod /dev/ra05 b 7 69
+# chmod 640 /dev/ra05
+# /etc/chown root,sys /dev/ra05
+# /etc/mknod /dev/ra06 b 7 70
+# chmod 640 /dev/ra06
+# /etc/chown root,sys /dev/ra06
+# /etc/mknod /dev/ra10 b 7 72
+# chmod 640 /dev/ra10
+# /etc/chown root,sys /dev/ra10
+# /etc/mknod /dev/ra11 b 7 9
+# chmod 640 /dev/ra11
+# /etc/chown root,sys /dev/ra11
+# /etc/mknod /dev/ra12 b 7 74
+# chmod 640 /dev/ra12
+# /etc/chown root,sys /dev/ra12
+# /etc/mknod /dev/ra13 b 7 75
+# chmod 640 /dev/ra13
+# /etc/chown root,sys /dev/ra13
+# /etc/mknod /dev/ra14 b 7 76
+# chmod 640 /dev/ra14
+# /etc/chown root,sys /dev/ra14
+# /etc/mknod /dev/ra15 b 7 77
+# chmod 640 /dev/ra15
+# /etc/chown root,sys /dev/ra15
+# /etc/mknod /dev/ra16 b 7 78
+# chmod 640 /dev/ra16
+# /etc/chown root,sys /dev/ra16
+# /etc/mknod /dev/ra20a b 7 80
+# chmod 664 /dev/ra20a
+# /etc/chown root,bin /dev/ra20a
+# /etc/mknod /dev/ra21 b 7 17
+# chmod 640 /dev/ra21
+# /etc/chown root,sys /dev/ra21
+# /etc/mknod /dev/ra22 b 7 18
+# chmod 664 /dev/ra22
+# /etc/chown root,bin /dev/ra22
+# /etc/mknod /dev/ra23 b 7 83
+# chmod 640 /dev/ra23
+# /etc/chown root,sys /dev/ra23
+# /etc/mknod /dev/ra24 b 7 84
+# chmod 640 /dev/ra24
+# /etc/chown root,sys /dev/ra24
+# /etc/mknod /dev/ra25 b 7 85
+# chmod 640 /dev/ra25
+# /etc/chown root,sys /dev/ra25
+# /etc/mknod /dev/ra26 b 7 22
+# chmod 640 /dev/ra26
+# /etc/chown root,sys /dev/ra26
+# /etc/mknod /dev/rmt1 c 22 0
+# chmod 666 /dev/rmt1
+# /etc/chown root,sys /dev/rmt1
+# /etc/mknod /dev/rmt2 c 22 8
+# chmod 666 /dev/rmt2
+# /etc/chown root,sys /dev/rmt2
+# /etc/mknod /dev/rmt5 c 22 4
+# chmod 666 /dev/rmt5
+# /etc/chown root,sys /dev/rmt5
+# /etc/mknod /dev/rmt6 c 22 12
+# chmod 666 /dev/rmt6
+# /etc/chown root,sys /dev/rmt6
+# /etc/mknod /dev/rra00 c 28 0
+# chmod 640 /dev/rra00
+# /etc/chown root,sys /dev/rra00
+# /etc/mknod /dev/rra01 c 28 1
+# chmod 640 /dev/rra01
+# /etc/chown root,sys /dev/rra01
+# /etc/mknod /dev/rra02 c 28 2
+# chmod 640 /dev/rra02
+# /etc/chown root,sys /dev/rra02
+# /etc/mknod /dev/rra03 c 28 3
+# chmod 640 /dev/rra03
+# /etc/chown root,sys /dev/rra03
+# /etc/mknod /dev/rra04 c 28 4
+# chmod 640 /dev/rra04
+# /etc/chown root,sys /dev/rra04
+# /etc/mknod /dev/rra05 c 28 5
+# chmod 640 /dev/rra05
+# /etc/chown root,sys /dev/rra05
+# /etc/mknod /dev/rra06 c 28 6
+# chmod 640 /dev/rra06
+# /etc/chown root,sys /dev/rra06
+# /etc/mknod /dev/rra07 c 28 7
+# chmod 640 /dev/rra07
+# /etc/chown root,sys /dev/rra07
+# /etc/mknod /dev/rra10 c 28 8
+# chmod 660 /dev/rra10
+# /etc/chown root,sys /dev/rra10
+# /etc/mknod /dev/rra11 c 28 9
+# chmod 640 /dev/rra11
+# /etc/chown root,sys /dev/rra11
+# /etc/mknod /dev/rra12 c 28 10
+# chmod 640 /dev/rra12
+# /etc/chown root,sys /dev/rra12
+# /etc/mknod /dev/rra13 c 28 11
+# chmod 640 /dev/rra13
+# /etc/chown root,sys /dev/rra13
+# /etc/mknod /dev/rra14 c 28 12
+# chmod 640 /dev/rra14
+# /etc/chown root,sys /dev/rra14
+# /etc/mknod /dev/rra15 c 28 13
+# chmod 640 /dev/rra15
+# /etc/chown root,sys /dev/rra15
+# /etc/mknod /dev/rra16 c 28 14
+# chmod 660 /dev/rra16
+# /etc/chown root,sys /dev/rra16
+# /etc/mknod /dev/rra17 c 28 15
+# chmod 640 /dev/rra17
+# /etc/chown root,sys /dev/rra17
+# /etc/mknod /dev/rra20 c 28 16
+# chmod 640 /dev/rra20
+# /etc/chown root,sys /dev/rra20
+# /etc/mknod /dev/rra21 c 28 17
+# chmod 640 /dev/rra21
+# /etc/chown root,sys /dev/rra21
+# /etc/mknod /dev/rra22 c 28 18
+# chmod 640 /dev/rra22
+# /etc/chown root,sys /dev/rra22
+# /etc/mknod /dev/rra23 c 28 19
+# chmod 640 /dev/rra23
+# /etc/chown root,sys /dev/rra23
+# /etc/mknod /dev/rra24 c 28 20
+# chmod 640 /dev/rra24
+# /etc/chown root,sys /dev/rra24
+# /etc/mknod /dev/rra25 c 28 21
+# chmod 640 /dev/rra25
+# /etc/chown root,sys /dev/rra25
+# /etc/mknod /dev/rra26 c 28 22
+# chmod 640 /dev/rra26
+# /etc/chown root,sys /dev/rra26
+# /etc/mknod /dev/rra27 c 28 23
+# chmod 640 /dev/rra27
+# /etc/chown root,sys /dev/rra27
+# /etc/mknod /dev/stderr c 40 2
+# chmod 666 /dev/stderr
+# /etc/chown root,other /dev/stderr
+# /etc/mknod /dev/stdin c 40 0
+# chmod 666 /dev/stdin
+# /etc/chown root,other /dev/stdin
+# /etc/mknod /dev/stdout c 40 1
+# chmod 666 /dev/stdout
+# /etc/chown root,other /dev/stdout
+# /etc/mknod /dev/tty c 40 3
+# chmod 666 /dev/tty
+# /etc/chown root,other /dev/tty
+# for n in 00 01 02 03 04 05 06 07 09 10 11; do /etc/mknod /dev/tcp$n c 43 $n; chmod 666 /dev/tcp$n; /etc/chown root,bin /dev/tcp$n; done
+# for n in 00 01 02 03 04 05 06 07; do /etc/mknod /dev/tty$n c 1 $n; chmod 622 /dev/tty$n; /etc/chown root,0 /dev/tty$n; done
+# for n in 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95; do /etc/mknod /dev/dk/dk$n c 31 $n; chmod 666 /dev/dk/dk$n; /etc/chown root,sys /dev/dk/dk$n; done
+# for n in 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 ; do /etc/mknod /dev/fd/$n c 40 $n; chmod 666 /dev/fd/$n; /etc/chown root,other /dev/fd/$n; done
+# for n in 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 ; do /etc/mknod /dev/fd/$n c 40 $n; chmod 666 /dev/fd/$n; /etc/chown root,other /dev/fd/$n; done
+# for n in 00 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 ; do /etc/mknod /dev/pt/pt$n c 18 $n; chmod 666 /dev/pt/pt$n; /etc/chown root,sys /dev/pt/pt$n; done
+# ed /etc/ttys
+1172
+2,25d
+2i
+12tty00
+12tty01
+12tty02
+12tty03
+12tty04
+12tty05
+12tty06
+12tty07
+.
+w
+1044
+q
 # PATH=/bin:/usr/bin:/etc; export PATH
 # cd /usr/src/cmd/inet/libin; make install
 cc -g -I ../h -c tcp_lib.c
