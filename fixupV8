@@ -9,6 +9,7 @@ source common.tcl
 exec cp rp06v8_prep rp06v8
 
 proc boot { } {
+    simh "set noasync"
     simh "set tto 7b"
     simh "set dz lines=8"
     simh "set rp0 rp06"

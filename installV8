@@ -11,6 +11,7 @@ exec cp rp06bsd rp06v8_prep
 spawn vax780
 
 # boot disk with bootBsd file image
+simh "set noasync"
 simh "set tto 7b"
 simh "set dz lines=8"
 simh "set rp0 rp06"
