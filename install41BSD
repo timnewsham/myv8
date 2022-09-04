@@ -9,11 +9,11 @@ exec rm -f rp06bsd
 
 spawn vax780
 
+simh "set noasync"
 simh "set tto 7b"
 simh "set dz lines=8"
 simh "set rp0 rp06"
 simh "at rp0 rp06bsd"
-expect "Overwrite last track?" { after 1000 { sendline "" } }
 simh "set tu0 te16"
 simh "at tu0 4.1_BSD_19810710-modified.tap"
 
